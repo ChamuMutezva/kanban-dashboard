@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import "./globals.css";
@@ -30,19 +31,27 @@ export default function RootLayout({
         <html lang="en">
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                suppressHydrationWarning
             >
-                <SidebarProvider>
-                    <AppSidebar />
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange                   
+                >
+                    <SidebarProvider>
+                        <AppSidebar />
 
-                    <main className="w-full">
-                        <div className="flex gap-2 py-4">
-                            <SidebarTrigger />
-                            <NavLogo />
-                        </div>
-                        <Separator className="w-full" />
-                        {children}
-                    </main>
-                </SidebarProvider>
+                        <main className="w-full">
+                            <div className="flex gap-2 py-4">
+                                <SidebarTrigger />
+                                <NavLogo />
+                            </div>
+                            <Separator className="w-full" />
+                            {children}
+                        </main>
+                    </SidebarProvider>
+                </ThemeProvider>
             </body>
         </html>
     );
