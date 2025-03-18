@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Board {
+  id        String   @id @default(cuid())
+  name      String
+  columns   Column[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Column {
+  id        String   @id @default(cuid())
+  name      String
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  boardId   String
+  tasks     Task[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Int      @default(0)
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  status      String?
+  column      Column     @relation(fields: [columnId], references: [id], onDelete: Cascade)
+  columnId    String
+  subtasks    Subtask[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  order       Int        @default(0)
+}
+
+model Subtask {
+  id          String   @id @default(cuid())
+  title       String
+  isCompleted Boolean  @default(false)
+  task        Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  order       Int      @default(0)
+}
