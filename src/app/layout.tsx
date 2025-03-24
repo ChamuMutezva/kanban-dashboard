@@ -7,6 +7,7 @@ import { AppSidebar } from "@/components/app-sidebar"
 import "./globals.css"
 import { Separator } from "@/components/ui/separator"
 import { getBoards } from "../../lib/boards"
+import { CurrentBoardHeader } from "@/components/current-board-header"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,7 @@ export default async function RootLayout({
             <main className="w-full">
               <div className="flex gap-2 py-4">
                 <SidebarTrigger />
-                
+                <CurrentBoardHeader boards={boards} />
               </div>
               <Separator className="w-full" />
               {children}
