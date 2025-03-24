@@ -18,6 +18,7 @@ datasource db {
 model Board {
   id        String   @id @default(cuid())
   name      String
+  slug      String
   columns   Column[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

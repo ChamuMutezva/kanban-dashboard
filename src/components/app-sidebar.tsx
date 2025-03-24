@@ -1,12 +1,7 @@
-import {
-    Calendar,
-    Home,
-    Inbox,
-    Search,
-    Settings,
-    TableProperties,
-} from "lucide-react";
+// import {Calendar,Home, Inbox, Search, Settings, TableProperties,} from "lucide-react";
 import { ModeToggle } from "./ModeToggle";
+import Image from "next/image";
+import Link from "next/link";
 
 import {
     Sidebar,
@@ -19,7 +14,9 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-// Menu items.
+import { getBoards } from "../../lib/boards";
+
+/*
 const items = [
     {
         title: "Platform Launch",
@@ -52,8 +49,11 @@ const items = [
         icon: Settings,
     },
 ];
+*/
 
-export function AppSidebar() {
+export async function AppSidebar() {
+    const boardIcon = "/assets/icon-board.svg";
+    const boards = await getBoards();  
     return (
         <Sidebar>
             <SidebarContent className="justify-between">
@@ -61,13 +61,39 @@ export function AppSidebar() {
                     <SidebarGroupLabel>Application</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {items.map((item) => (
-                                <SidebarMenuItem key={item.title}>
+                            <Link
+                                href="/"
+                                passHref
+                                className="flex items-center justify-start px-2 gap-2"
+                            >
+                                {" "}
+                                <Image
+                                    className="dark:invert"
+                                    src={boardIcon}
+                                    alt=""
+                                    width={16}
+                                    height={16}
+                                    priority
+                                />
+                                <span>Home</span>
+                            </Link>
+                            {boards.map((item) => (
+                                <SidebarMenuItem key={item.id}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
-                                            <item.icon />
-                                            <span>{item.title}</span>
-                                        </a>
+                                        <Link
+                                            href={`/boards/${item.id}`}
+                                            passHref
+                                        >
+                                            <Image
+                                                className="dark:invert"
+                                                src={boardIcon}
+                                                alt=""
+                                                width={16}
+                                                height={16}
+                                                priority
+                                            />
+                                            <span>{item.name}</span>
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}

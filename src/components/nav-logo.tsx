@@ -9,7 +9,6 @@ function NavLogo() {
     const logoMobile = "/assets/logo-mobile.svg";
 
     const isMobile = useIsMobile();
-    console.log(isMobile)
     if (isMobile) {
         return (
             <Image
