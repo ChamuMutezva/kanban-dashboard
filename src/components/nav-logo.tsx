@@ -11,25 +11,29 @@ function NavLogo() {
     const isMobile = useIsMobile();
     if (isMobile) {
         return (
-            <Image
-                className="dark:invert"
-                src={logoMobile}
-                alt="Next.js logo"
-                width={24}
-                height={25}
-                priority
-            />
+            <div className="p-4">
+                <Image
+                    className="dark:invert"
+                    src={logoMobile}
+                    alt="logo"
+                    width={24}
+                    height={25}
+                    priority
+                />
+            </div>
         );
     }
     return (
-        <Image
-            className="dark:invert"
-            src={logoDark}
-            alt="logo"
-            width={153}
-            height={26}
-            priority
-        />
+        <div className="p-4">
+            <Image
+                className="dark:invert"
+                src={logoDark}
+                alt="logo"
+                width={153}
+                height={26}
+                priority
+            />
+        </div>
     );
 }
 

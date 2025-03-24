@@ -53,23 +53,12 @@ export default async function Home() {
             </header>
 
             {boards.length < 1 ? (
-                <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/20">
-                    <h2 className="text-xl font-semibold mb-4">
-                        No boards found
-                    </h2>
-                    <p className="text-muted-foreground mb-6">
-                        Create your first board to get started
-                    </p>
-                    <Button>
-                        <PlusCircle className="mr-2 h-4 w-4" />
-                        Create Board
-                    </Button>
-                </div>
+                <NoBoardsFound />
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {boards.map((board) => (
                         <Link
-                            href={`/boards/${board.id}`}
+                            href={`/boards/${board.slug}`}
                             key={board.id}
                             className="group"
                         >
@@ -111,13 +100,29 @@ export default async function Home() {
                                 Create New Board
                             </h3>
                             <p className="text-sm text-muted-foreground mb-4">
-                                Add a new board to organize your tasks
+                                This board is empty. Create a new column to get
+                                started
                             </p>
                             <Button>Create Board</Button>
                         </div>
                     </Card>
                 </div>
             )}
+        </div>
+    );
+}
+
+function NoBoardsFound() {
+    return (
+        <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/20">
+            <h2 className="text-xl font-semibold mb-4">No boards found</h2>
+            <p className="text-muted-foreground mb-6">
+                Create your first board to get started
+            </p>
+            <Button>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Create Board
+            </Button>
         </div>
     );
 }
