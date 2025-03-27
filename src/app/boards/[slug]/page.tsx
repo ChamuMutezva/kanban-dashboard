@@ -1,13 +1,28 @@
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { getBoardBySlug } from "../../../../lib/boards";
 import { PlusCircle } from "lucide-react";
+
+// Define types for our data structure
+interface Subtask {
+    id: string;
+    title: string;
+    isCompleted: boolean;
+    taskId: string;
+}
+interface Task {
+    id: string;
+    title: string;
+    description?: string | null;
+    subtasks: Subtask[];
+}
 
 export default async function Page({
     params,
 }: Readonly<{
-    params: Promise<{ slug: string }>; // Updated to use Promise
+    params: { slug: string };
 }>) {
-    const { slug } = await params; // Added await here
+    const { slug } = params;
 
     console.log("Slug parameter:", slug);
 
@@ -29,25 +44,90 @@ export default async function Page({
             {board.columns.length < 1 ? (
                 <NoColumnsFound />
             ) : (
-                <ul className="mt-4 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {board.columns?.map((column) => (
-                        <li key={column.id} className="p-4 border rounded-md">
-                            <h3 className="text-lg font-semibold">
-                                {column.name}
+                        <div key={column.id} className="flex flex-col">
+                            <h3 className="text-md font-semibold text-mid-grey uppercase tracking-wider mb-6">
+                                {column.name} ({column.tasks.length})
                             </h3>
-                            <ul className="mt-2 space-y-2">
+                            <div className="space-y-5">
                                 {column.tasks?.map((task) => (
-                                    <li
-                                        key={task.id}
-                                        className="p-2 rounded"
-                                    >
-                                        {task.title}
-                                    </li>
+                                    <TaskCard key={task.id} task={task} />
                                 ))}
-                            </ul>
-                        </li>
+                            </div>
+                        </div>
                     ))}
-                </ul>
+                </div>
+            )}
+        </div>
+    );
+}
+
+function TaskCard({ task }: Readonly<{ task: Task }>) {
+    // Count completed subtasks
+    const completedSubtasks = task.subtasks.filter(
+        (subtask) => subtask.isCompleted
+    ).length;
+    const totalSubtasks = task.subtasks.length;
+
+    return (
+        <div className="p-6 bg-white dark:bg-very-dark-gray rounded-lg shadow-sm border border-light-grey dark:border-dark-grey">
+            <h4 className="font-bold text-black dark:text-white mb-2">
+                {task.title}
+            </h4>
+            {task.description && (
+                <p className="text-sm text-mid-grey mb-3">{task.description}</p>
+            )}
+            <div className="text-xs text-mid-grey font-bold">
+                {completedSubtasks} of {totalSubtasks} subtasks
+            </div>
+
+            {/* Optionally show subtasks in a collapsed view */}
+            {task.subtasks.length > 0 && (
+                <div className="mt-4 pt-4 border-t border-light-grey dark:border-dark-grey">
+                    <details className="group">
+                        <summary className="text-xs font-medium cursor-pointer list-none flex items-center">
+                            <span className="text-mid-grey">View Subtasks</span>
+                            <svg
+                                className="ml-2 h-4 w-4 text-mid-grey transition-transform group-open:rotate-180"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </summary>
+                        <ul className="mt-3 space-y-2">
+                            {task.subtasks.map((subtask) => (
+                                <li
+                                    key={subtask.id}
+                                    className="flex items-start gap-2"
+                                >
+                                    <Checkbox
+                                        id={subtask.id}
+                                        checked={subtask.isCompleted}
+                                        disabled
+                                        className="mt-0.5"
+                                    />
+                                    <label
+                                        htmlFor={subtask.id}
+                                        className={`text-sm ${
+                                            subtask.isCompleted
+                                                ? "line-through text-mid-grey"
+                                                : "text-black dark:text-white"
+                                        }`}
+                                    >
+                                        {subtask.title}
+                                    </label>
+                                </li>
+                            ))}
+                        </ul>
+                    </details>
+                </div>
             )}
         </div>
     );
