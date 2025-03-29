@@ -10,7 +10,6 @@ interface Subtask {
   isCompleted: boolean
   taskId: string
 }
-
 interface Task {
   id: string
   title: string
@@ -18,14 +17,12 @@ interface Task {
   subtasks: Subtask[]
 }
 
-
-
 export default async function Page({
   params,
 }: Readonly<{
-  params: Promise<{ slug: string }> // Changed back to Promise<{ slug: string }>
+  params: Promise<{ slug: string }>
 }>) {
-  const { slug } = await params // Added await back
+  const { slug } = await params
 
   console.log("Slug parameter:", slug)
 
@@ -49,7 +46,11 @@ export default async function Page({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {board.columns?.map((column) => (
-            <div key={column.id} className="flex flex-col">
+            <div
+              key={column.id}
+              className="flex flex-col"
+              data-column-id={column.id} // Add data attribute for column detection
+            >
               <h3 className="text-md font-semibold text-mid-grey uppercase tracking-wider mb-6">
                 {column.name} ({column.tasks.length})
               </h3>
@@ -66,7 +67,7 @@ export default async function Page({
   )
 }
 
-function TaskCard({ task }: { task: Task }) {
+function TaskCard({ task }: Readonly<{ task: Task }>) {
   // Count completed subtasks
   const completedSubtasks = task.subtasks.filter((subtask) => subtask.isCompleted).length
   const totalSubtasks = task.subtasks.length
