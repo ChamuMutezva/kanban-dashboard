@@ -8,11 +8,10 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-// import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Columns } from "lucide-react";
 
-// Define the types for our data
+// Define the types for our data structure
 interface Subtask {
     id: string;
     title: string;
