@@ -82,9 +82,9 @@ function TaskCard({ task }: Readonly<{ task: Task }>) {
     const totalSubtasks = task.subtasks.length;
 
     return (
-        <Card className="bg-white dark:bg-black rounded-lg shadow-sm border border-light-grey dark:border-dark-grey">
+        <Card className="rounded-lg shadow-sm border">
             <CardHeader>
-                <CardTitle className="font-bold text-black dark:text-white mb-2">
+                <CardTitle className="font-bold mb-2">
                     {task.title}
                 </CardTitle>
                 <CardDescription>

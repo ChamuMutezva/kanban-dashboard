@@ -44,8 +44,8 @@ export default async function RootLayout({
                         Hence I need to fetch the data in the server using async */}
                         <AppSidebar boards={boards} />
 
-                        <main className="w-full bg-[hsl(var(--very-light-grey))] dark:bg-[hsl(var(--very-dark-grey))]">
-                            <div className="flex gap-2 py-4 items-center bg-white dark:bg-[var(--color-card)] ">
+                        <main className="w-full">
+                            <div className="flex gap-2 py-4 items-center bg-white dark:bg-[var(--almost-black)] ">
                                 <SidebarTrigger />
                                 <CurrentBoardHeader boards={boards} />
                             </div>
