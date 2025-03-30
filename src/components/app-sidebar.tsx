@@ -62,7 +62,6 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
                                                 passHref
                                             >
                                                 <Image
-                                                    className="dark:invert"
                                                     src={
                                                         boardIcon ||
                                                         "/placeholder.svg"

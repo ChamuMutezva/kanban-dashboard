@@ -43,7 +43,7 @@ function NavLogo() {
                 ></div>
                 
                 <div
-                    className="absolute inset-0 bg-[oklch(0.55_0.1553_281.45)]"
+                    className="absolute inset-0 bg-[var(--dark-purple)]"
                     style={{
                         WebkitMaskImage: `url(${
                             isMobile ? logoMobile : logoDark
@@ -55,7 +55,6 @@ function NavLogo() {
                         maskRepeat: "no-repeat",
                         WebkitMaskPosition: "center",
                         maskPosition: "center",
-                        // This would need custom CSS to isolate just the stripe part
                         clipPath: isMobile
                             ? "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
                             : "polygon(0% 0%, 25% 0%, 25% 100%, 0% 100%)",
