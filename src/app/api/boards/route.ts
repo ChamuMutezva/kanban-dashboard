@@ -10,6 +10,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
+    // Check if a board with this slug already exists
+    const existingBoard = await prisma.board.findFirst({
+      where: { slug },
+    })
+
+    if (existingBoard) {
+      return NextResponse.json({ error: "A board with this name already exists" }, { status: 409 })
+    }
+
     // Create the board with its columns
     const board = await prisma.board.create({
       data: {
@@ -33,5 +42,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Failed to create board" }, { status: 500 })
   }
 }
-
 
