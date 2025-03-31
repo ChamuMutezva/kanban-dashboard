@@ -1,11 +1,12 @@
 import prisma from "../../../../../../lib/prisma";
 import { type NextRequest, NextResponse } from "next/server";
 
-export async function POST(
-    req: NextRequest,
-    { params }: { params: Record<string, string | string[]> }
-) {
-    const boardId = params.boardId as string;
+type Params = Promise<{
+    boardId: string;
+}>;
+export async function POST(req: NextRequest, segmentData: { params: Params }) {
+    const params = await segmentData.params;
+    const boardId = params.boardId;
 
     try {
         const body = await req.json();
