@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { NoColumnsFound } from "@/components/no-columns-found";
 import { AddColumnButton } from "@/components/add-column-button";
-import { CreateTaskButton } from "@/components/create-task-button";
 
 // Define types for our data structure
 interface Subtask {
@@ -57,11 +56,7 @@ export default async function Page({
                         <h2 className="text-2xl font-bold sr-only">
                             {board.name}
                         </h2>
-                        <div className="flex gap-2 ml-auto">
-                            <CreateTaskButton
-                                boardId={board.id}
-                                columns={board.columns}
-                            />
+                        <div className="flex gap-2 ml-auto">                           
                             <AddColumnButton
                                 boardId={board.id}
                                 boardSlug={board.slug}

@@ -4,61 +4,26 @@ import { type NextRequest, NextResponse } from "next/server";
 type Params = Promise<{
     boardId: string;
 }>;
-export async function POST(req: NextRequest, segmentData: { params: Params }) {
+
+export async function GET(req: NextRequest, segmentData: { params: Params }) {
     const params = await segmentData.params;
     const boardId = params.boardId;
 
     try {
-        const body = await req.json();
-        const { columns } = body;
-
-        if (!columns || !Array.isArray(columns)) {
-            return NextResponse.json(
-                { error: "Missing or invalid columns data" },
-                { status: 400 }
-            );
-        }
-
-        // Check if the board exists
-        const board = await prisma.board.findUnique({
-            where: { id: boardId },
-            include: { columns: { orderBy: { order: "desc" } } },
+        const columns = await prisma.column.findMany({
+            where: {
+                boardId: boardId,
+            },
+            orderBy: {
+                order: "asc",
+            },
         });
 
-        if (!board) {
-            return NextResponse.json(
-                { error: "Board not found" },
-                { status: 404 }
-            );
-        }
-
-        // Get the current highest order value
-        let highestOrder = 0;
-        if (board.columns.length > 0) {
-            highestOrder = board.columns[0].order;
-        }
-
-        // Create the new columns
-        const createdColumns = await Promise.all(
-            columns.map(async (column: { name: string }, index: number) => {
-                return await prisma.column.create({
-                    data: {
-                        name: column.name,
-                        boardId: boardId,
-                        order: highestOrder + index + 1, // Increment order for each new column
-                    },
-                });
-            })
-        );
-
-        return NextResponse.json(
-            { message: "Columns added successfully", columns: createdColumns },
-            { status: 201 }
-        );
+        return NextResponse.json(columns);
     } catch (error) {
-        console.error("Error adding columns:", error);
+        console.error("Error fetching columns:", error);
         return NextResponse.json(
-            { error: "Failed to add columns" },
+            { error: "Failed to fetch columns" },
             { status: 500 }
         );
     }
