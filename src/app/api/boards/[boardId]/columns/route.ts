@@ -1,8 +1,8 @@
 import prisma from "../../../../../../lib/prisma";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(
-    request: Request,
+    request: NextRequest,
     { params }: { params: { boardId: string } }
 ) {
     const boardId = params.boardId;
