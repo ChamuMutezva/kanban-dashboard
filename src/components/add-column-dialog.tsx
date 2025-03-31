@@ -101,8 +101,8 @@ export function AddColumnDialog({ boardId, boardSlug, open, onOpenChange }: Read
   }
 
   return (
-    <CustomDialog open={open} onOpenChange={onOpenChange}>
-      <CustomDialogContent className="sm:max-w-[425px]">
+    <CustomDialog  open={open} onOpenChange={onOpenChange}>
+      <CustomDialogContent className="w-11/12 sm:max-w-[425px]">
         <CustomDialogHeader>
           <CustomDialogTitle>Add New Columns</CustomDialogTitle>
           <CustomDialogDescription>Add one or more columns to your board.</CustomDialogDescription>

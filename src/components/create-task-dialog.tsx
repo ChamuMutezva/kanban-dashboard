@@ -142,7 +142,7 @@ export function CreateTaskDialog({
 
     return (
         <CustomDialog open={open} onOpenChange={onOpenChange}>
-            <CustomDialogContent className="sm:max-w-[500px]">
+            <CustomDialogContent className="w-11/12 sm:max-w-[500px]">
                 <CustomDialogHeader>
                     <CustomDialogTitle>Add New Task</CustomDialogTitle>
                     <CustomDialogDescription>
@@ -181,7 +181,7 @@ export function CreateTaskDialog({
                                     <FormControl>
                                         <Textarea
                                             placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
-                                            className="min-h-[100px]"
+                                            className="min-h-[80px]"
                                             {...field}
                                         />
                                     </FormControl>

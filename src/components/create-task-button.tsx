@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Plus } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CreateTaskDialog } from "@/components/create-task-dialog"
 
@@ -26,10 +26,7 @@ interface CreateTaskButtonProps {
 export function CreateTaskButton({
   boardId,
   columns,
-  defaultColumnId,
-  variant = "default",
-  size = "default",
-  className,
+  defaultColumnId,     
   disabled,
   children,
 }: Readonly<CreateTaskButtonProps>) {
@@ -42,16 +39,15 @@ export function CreateTaskButton({
   return (
     <>
       <Button
-        onClick={() => setDialogOpen(true)}
-        variant={variant}
-        size={size}
-        className={className}
+        onClick={() => setDialogOpen(true)}      
+        
+        className="bg-[oklch(0.55_0.1553_281.45)] hover:bg-[oklch(0.55_0.1553_281.45)]/90 text-white"
         disabled={isDisabled}
         title={isDisabled ? disabledTitle : "Add new task"}
       >
         {children || (
           <>
-            <Plus className="mr-2 h-4 w-4" />
+            <PlusCircle className="mr-2 h-4 w-4" />
             Add New Task
           </>
         )}
