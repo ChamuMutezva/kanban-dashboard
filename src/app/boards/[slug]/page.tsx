@@ -37,6 +37,19 @@ export default async function Page({
 
     console.log("Board data:", board);
 
+    const COLORS_BY_COLUMN = {
+        done: "before:bg-green-500",
+        doing: "before:bg-orange-500",
+        todo: "before:bg-yellow-500",
+    } as const;
+
+    const getBulletColor = (columnName: string) =>
+        COLORS_BY_COLUMN[
+            columnName.toLowerCase() as keyof typeof COLORS_BY_COLUMN
+        ] ?? "before:bg-blue-500";
+
+    // Usage same as above
+
     if (!board) {
         return (
             <div className="p-8">
@@ -56,7 +69,7 @@ export default async function Page({
                         <h2 className="text-2xl font-bold sr-only">
                             {board.name}
                         </h2>
-                        <div className="flex gap-2 ml-auto">                           
+                        <div className="flex gap-2 ml-auto">
                             <AddColumnButton
                                 boardId={board.id}
                                 boardSlug={board.slug}
@@ -70,7 +83,14 @@ export default async function Page({
                                 className="flex flex-col"
                                 data-column-id={column.id} // Add data attribute for column detection
                             >
-                                <h3 className="text-md font-semibold text-mid-grey uppercase tracking-wider mb-6">
+                                <h3
+                                    className="text-md font-semibold text-mid-grey uppercase tracking-wider mb-6
+                                flex items-center justify-start gap-2"
+                                >
+                                    <span
+                                        className={`before:block before:w-3 before:h-3 before:rounded-full before:mr-2
+                                           ${getBulletColor(column.name)} `}
+                                    ></span>
                                     {column.name} ({column.tasks.length})
                                 </h3>
                                 <div className="space-y-5">
