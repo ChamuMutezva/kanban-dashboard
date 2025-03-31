@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Plus, X } from "lucide-react";
-
+/*
 import {
     Dialog,
     DialogContent,
@@ -15,6 +15,15 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+ */
+import {
+    CustomDialog,
+    CustomDialogContent,
+    CustomDialogDescription,
+    CustomDialogFooter,
+    CustomDialogHeader,
+    CustomDialogTitle,
+} from "@/components/ui/custom-dialog";
 import {
     Form,
     FormControl,
@@ -82,7 +91,7 @@ export function CreateTaskDialog({
         defaultValues: {
             title: "",
             description: "",
-            columnId: defaultColumnId || "",
+            columnId: defaultColumnId ?? "",
             subtasks: [{ title: "" }],
         },
     });
@@ -132,14 +141,14 @@ export function CreateTaskDialog({
     };
 
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                    <DialogTitle>Add New Task</DialogTitle>
-                    <DialogDescription>
+        <CustomDialog open={open} onOpenChange={onOpenChange}>
+            <CustomDialogContent className="sm:max-w-[500px]">
+                <CustomDialogHeader>
+                    <CustomDialogTitle>Add New Task</CustomDialogTitle>
+                    <CustomDialogDescription>
                         Create a new task with subtasks.
-                    </DialogDescription>
-                </DialogHeader>
+                    </CustomDialogDescription>
+                </CustomDialogHeader>
 
                 <Form {...form}>
                     <form
@@ -261,7 +270,7 @@ export function CreateTaskDialog({
                             )}
                         />
 
-                        <DialogFooter>
+                        <CustomDialogFooter>
                             <Button
                                 type="submit"
                                 className="w-full bg-[oklch(0.55_0.1553_281.45)] hover:bg-[oklch(0.55_0.1553_281.45)]/90 text-white"
@@ -269,10 +278,10 @@ export function CreateTaskDialog({
                             >
                                 {isSubmitting ? "Creating..." : "Create Task"}
                             </Button>
-                        </DialogFooter>
+                        </CustomDialogFooter>
                     </form>
                 </Form>
-            </DialogContent>
-        </Dialog>
+            </CustomDialogContent>
+        </CustomDialog>
     );
 }

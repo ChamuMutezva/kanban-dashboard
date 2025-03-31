@@ -89,22 +89,7 @@ export default async function Home() {
                                 </CardFooter>
                             </Card>
                         </Link>
-                    ))}
-
-                    {/* Add new board card */}
-                    <Card className="h-full border-dashed flex flex-col items-center justify-center p-6 hover:border-primary/50 transition-colors">
-                        <div className="text-center">
-                            <PlusCircle className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                            <h3 className="font-medium mb-2">
-                                Create New Board
-                            </h3>
-                            <p className="text-sm text-muted-foreground mb-4">
-                                This board is empty. Create a new column to get
-                                started
-                            </p>
-                            <Button>Create Board</Button>
-                        </div>
-                    </Card>
+                    ))}                   
                 </div>
             )}
         </div>

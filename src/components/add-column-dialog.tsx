@@ -8,13 +8,14 @@ import { z } from "zod"
 import { Plus, X } from "lucide-react"
 
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+  CustomDialog,
+  CustomDialogContent,
+  CustomDialogDescription,
+  CustomDialogFooter,
+  CustomDialogHeader,
+  CustomDialogTitle,
+} from "@/components/ui/custom-dialog";
+
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -100,12 +101,12 @@ export function AddColumnDialog({ boardId, boardSlug, open, onOpenChange }: Read
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add New Columns</DialogTitle>
-          <DialogDescription>Add one or more columns to your board.</DialogDescription>
-        </DialogHeader>
+    <CustomDialog open={open} onOpenChange={onOpenChange}>
+      <CustomDialogContent className="sm:max-w-[425px]">
+        <CustomDialogHeader>
+          <CustomDialogTitle>Add New Columns</CustomDialogTitle>
+          <CustomDialogDescription>Add one or more columns to your board.</CustomDialogDescription>
+        </CustomDialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -144,7 +145,7 @@ export function AddColumnDialog({ boardId, boardSlug, open, onOpenChange }: Read
               </Button>
             </div>
 
-            <DialogFooter>
+            <CustomDialogFooter>
               <Button
                 type="submit"
                 className="w-full bg-[oklch(0.55_0.1553_281.45)] hover:bg-[oklch(0.55_0.1553_281.45)]/90 text-white"
@@ -152,11 +153,11 @@ export function AddColumnDialog({ boardId, boardSlug, open, onOpenChange }: Read
               >
                 {isSubmitting ? "Adding..." : "Add Columns"}
               </Button>
-            </DialogFooter>
+            </CustomDialogFooter>
           </form>
         </Form>
-      </DialogContent>
-    </Dialog>
+      </CustomDialogContent>
+    </CustomDialog>
   )
 }
 
