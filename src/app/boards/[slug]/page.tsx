@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { getBoardBySlug } from "../../../../lib/boards";
-import { PlusCircle } from "lucide-react";
 import {
     Card,
     CardContent,
@@ -9,6 +7,8 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { NoColumnsFound } from "@/components/no-columns-found";
+import { AddColumnButton } from "@/components/add-column-button";
 
 // Define types for our data structure
 interface Subtask {
@@ -49,26 +49,39 @@ export default async function Page({
     return (
         <div className="p-8">
             {board.columns.length < 1 ? (
-                <NoColumnsFound />
+                <NoColumnsFound boardId={board.id} boardSlug={board.slug} />
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {board.columns?.map((column) => (
-                        <div
-                            key={column.id}
-                            className="flex flex-col"
-                            data-column-id={column.id} // Add data attribute for column detection
-                        >
-                            <h3 className="text-md font-semibold text-mid-grey uppercase tracking-wider mb-6">
-                                {column.name} ({column.tasks.length})
-                            </h3>
-                            <div className="space-y-5">
-                                {column.tasks?.map((task) => (
-                                    <TaskCard key={task.id} task={task} />
-                                ))}
-                            </div>
+                <>
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-2xl font-bold sr-only">
+                            {board.name}
+                        </h2>
+                        <div className="ml-auto">
+                            <AddColumnButton
+                                boardId={board.id}
+                                boardSlug={board.slug}
+                            />
                         </div>
-                    ))}
-                </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {board.columns?.map((column) => (
+                            <div
+                                key={column.id}
+                                className="flex flex-col"
+                                data-column-id={column.id} // Add data attribute for column detection
+                            >
+                                <h3 className="text-md font-semibold text-mid-grey uppercase tracking-wider mb-6">
+                                    {column.name} ({column.tasks.length})
+                                </h3>
+                                <div className="space-y-5">
+                                    {column.tasks?.map((task) => (
+                                        <TaskCard key={task.id} task={task} />
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </>
             )}
         </div>
     );
@@ -84,9 +97,7 @@ function TaskCard({ task }: Readonly<{ task: Task }>) {
     return (
         <Card className="rounded-lg shadow-sm border">
             <CardHeader>
-                <CardTitle className="font-bold mb-2">
-                    {task.title}
-                </CardTitle>
+                <CardTitle className="font-bold mb-2">{task.title}</CardTitle>
                 <CardDescription>
                     {task.description && (
                         <p className="text-sm text-mid-grey mb-3">
@@ -150,20 +161,5 @@ function TaskCard({ task }: Readonly<{ task: Task }>) {
                 )}
             </CardContent>
         </Card>
-    );
-}
-
-function NoColumnsFound() {
-    return (
-        <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/20">
-            <h2 className="sr-only">No columns found</h2>
-            <p className="text-muted-foreground mb-6">
-                This board is empty. Create a new column to get started
-            </p>
-            <Button>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add New Column
-            </Button>
-        </div>
     );
 }
