@@ -3,9 +3,9 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(
     request: NextRequest,
-    { params }: { params: { boardId: string } }
+    params: { boardId: string }  // <-- Remove the nested `{ params }`
 ) {
-    const boardId = params.boardId;
+    const boardId = params.boardId;  // Now directly accessed
 
     try {
         const body = await request.json();
@@ -18,7 +18,7 @@ export async function POST(
             );
         }
 
-        // Check if the board exists
+        // Rest of your logic remains the same...
         const board = await prisma.board.findUnique({
             where: { id: boardId },
             include: { columns: { orderBy: { order: "desc" } } },
@@ -31,20 +31,18 @@ export async function POST(
             );
         }
 
-        // Get the current highest order value
         let highestOrder = 0;
         if (board.columns.length > 0) {
             highestOrder = board.columns[0].order;
         }
 
-        // Create the new columns
         const createdColumns = await Promise.all(
             columns.map(async (column: { name: string }, index: number) => {
                 return await prisma.column.create({
                     data: {
                         name: column.name,
                         boardId: boardId,
-                        order: highestOrder + index + 1, // Increment order for each new column
+                        order: highestOrder + index + 1,
                     },
                 });
             })
