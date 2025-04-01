@@ -28,13 +28,11 @@ export function TaskCardWrapper({
     };
 
     return (
-        <div className="relative">
-            {children}
-
+        <div className="relative">   
             <div className="absolute top-3 right-3">
                 <TaskViewButton onClick={() => setIsModalOpen(true)} />
             </div>
-
+            {children}
             <TaskViewModal
                 task={task}
                 isOpen={isModalOpen}
