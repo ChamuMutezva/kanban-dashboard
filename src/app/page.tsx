@@ -56,12 +56,8 @@ export default async function Home() {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {boards.map((board) => (
-                        <Link
-                            href={`/boards/${board.slug}`}
-                            key={board.id}
-                            className="group"
-                        >
-                            <Card className="h-full transition-all hover:shadow-md">
+                        <div key={board.id} className="group">
+                            <Card className="h-full transition-all relative isolate hover:shadow-md">
                                 <CardHeader>
                                     <CardTitle className="group-hover:text-primary transition-colors">
                                         {board.name}
@@ -75,21 +71,20 @@ export default async function Home() {
                                             tasks
                                         </span>
                                     </div>
-
-                                    {/* Show column badges */}
-                                    <div className="flex flex-wrap gap-2"></div>
                                 </CardContent>
                                 <CardFooter>
-                                    <Button
-                                        variant="ghost"
+                                    <Link
+                                        href={`/boards/${board.slug}`}
                                         className="w-full justify-start"
                                     >
+                                        <span className="inset-0 absolute z-50"></span>
                                         View Board
-                                    </Button>
+                                        <span className="sr-only">{`${board.name}`}</span>
+                                    </Link>
                                 </CardFooter>
                             </Card>
-                        </Link>
-                    ))}                   
+                        </div>
+                    ))}
                 </div>
             )}
         </div>
