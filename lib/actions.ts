@@ -73,10 +73,18 @@ export async function updateTask(task: Task): Promise<void> {
 
     console.log("Task update completed successfully")
 
-    // Extract the board slug from the task ID or use a different approach
-    // This assumes your task IDs follow a pattern like "board-slug-task-id"
-    const boardSlug = task.id.split("-")[0]
-    revalidatePath(`/boards/${boardSlug}`)
+    // Get the board slug from the database
+    const taskWithBoard = await prisma.task.findUnique({
+      where: { id: task.id },
+      include: { column: { include: { board: true } } },
+    })
+
+    if (taskWithBoard?.column?.board?.slug) {
+      revalidatePath(`/boards/${taskWithBoard.column.board.slug}`)
+    } else {
+      // Fallback to a generic path if we can't determine the board slug
+      revalidatePath("/boards")
+    }
   } catch (error) {
     console.error("Detailed error in updateTask:", error)
 
@@ -97,6 +105,14 @@ export async function deleteTask(taskId: string): Promise<void> {
   try {
     console.log("Starting task deletion for:", taskId)
 
+    // Get the board slug before deleting the task
+    const taskWithBoard = await prisma.task.findUnique({
+      where: { id: taskId },
+      include: { column: { include: { board: true } } },
+    })
+
+    const boardSlug = taskWithBoard?.column?.board?.slug
+
     await prisma.$transaction(async (tx) => {
       // Delete all subtasks first
       const deletedSubtasks = await tx.subtask.deleteMany({
@@ -111,9 +127,13 @@ export async function deleteTask(taskId: string): Promise<void> {
       console.log("Task deleted successfully")
     })
 
-    // Extract the board slug from the task ID or use a different approach
-    const boardSlug = taskId.split("-")[0]
-    revalidatePath(`/boards/${boardSlug}`)
+    // Revalidate the board page
+    if (boardSlug) {
+      revalidatePath(`/boards/${boardSlug}`)
+    } else {
+      // Fallback to a generic path if we can't determine the board slug
+      revalidatePath("/boards")
+    }
   } catch (error) {
     console.error("Detailed error in deleteTask:", error)
 
@@ -126,6 +146,4 @@ export async function deleteTask(taskId: string): Promise<void> {
     throw new Error(`Failed to delete task: ${error instanceof Error ? error.message : "Unknown error"}`)
   }
 }
-
-
 

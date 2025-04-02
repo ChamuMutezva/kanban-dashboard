@@ -6,7 +6,7 @@ import { useState } from "react"
 import { type Task, TaskViewModal } from "./TaskViewModal"
 import { TaskViewButton } from "./TaskViewButton"
 import { EditTaskForm } from "./EditTaskForm"
-import { updateTask } from "../../lib/actions"
+import { updateTask, deleteTask } from "../../lib/actions"
 import { useRouter } from "next/navigation"
 
 interface TaskCardWrapperProps {
@@ -20,6 +20,7 @@ export function TaskCardWrapper({ task, children }: Readonly<TaskCardWrapperProp
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [currentTask, setCurrentTask] = useState<Task>(task)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const handleEdit = (taskId: string) => {
@@ -30,11 +31,29 @@ export function TaskCardWrapper({ task, children }: Readonly<TaskCardWrapperProp
   }
 
   const handleDelete = async (taskId: string) => {
-    console.log("Delete task:", taskId)
-    // Implement your delete logic
-    // For example:
-    // await deleteTask(taskId)
-    // router.refresh()
+    try {
+      setIsDeleting(true)
+      setError(null)
+
+      console.log("Deleting task:", taskId)
+
+      // Call the server action to delete the task
+      await deleteTask(taskId)
+
+      // Close the view modal
+      setIsViewModalOpen(false)
+
+      // Refresh the page to show the updated board
+      router.refresh()
+    } catch (error) {
+      console.error("Failed to delete task:", error)
+      setError(error instanceof Error ? error.message : "Failed to delete task")
+
+      // Keep the modal open to show the error
+      // The error will be displayed in the TaskViewModal
+    } finally {
+      setIsDeleting(false)
+    }
   }
 
   const handleSaveTask = async (updatedTask: Task) => {
@@ -77,6 +96,8 @@ export function TaskCardWrapper({ task, children }: Readonly<TaskCardWrapperProp
         onClose={() => setIsViewModalOpen(false)}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        error={error}
+        isDeleting={isDeleting}
       />
 
       <EditTaskForm
