@@ -49,8 +49,6 @@ export default async function Page({
             columnName.toLowerCase() as keyof typeof COLORS_BY_COLUMN
         ] ?? "before:bg-blue-500";
 
-    // Usage same as above
-
     if (!board) {
         return (
             <div className="p-8">

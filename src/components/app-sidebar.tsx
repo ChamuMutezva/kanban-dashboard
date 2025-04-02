@@ -15,6 +15,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    useSidebar,
 } from "@/components/ui/sidebar";
 import NavLogo from "./nav-logo";
 import { Button } from "./ui/button";
@@ -33,6 +34,12 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
     const boardIcon = "/assets/icon-board.svg";
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
+    const { setOpenMobile } = useSidebar();
+
+    function handleBoardClick() {
+        setOpenMobile(false);
+    }
+
     return (
         <>
             <Sidebar>
@@ -41,6 +48,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
                         <Link
                             href="/"
                             passHref
+                            onClick={handleBoardClick}
                             className={`flex items-center justify-start px-2 gap-2 py-4 rounded-md `}
                         >
                             <NavLogo />
@@ -63,6 +71,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
                                                 <Link
                                                     href={`/boards/${item.slug}`}
                                                     passHref
+                                                    onClick={handleBoardClick}
                                                 >
                                                     <Image
                                                         src={

@@ -86,7 +86,7 @@ export function TaskCardWrapper({ task, children }: Readonly<TaskCardWrapperProp
     <div className="relative">
       {children}
 
-      <div className="absolute top-3 right-3">
+      <div className="absolute top-1 right-1">
         <TaskViewButton onClick={() => setIsViewModalOpen(true)} />
       </div>
 
