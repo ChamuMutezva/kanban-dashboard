@@ -1,43 +1,64 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { type Task, TaskViewModal } from "./TaskViewModal"
+import type React from "react";
+
+import { useState, useRef } from "react";
+import { type Task, TaskViewModal } from "./TaskViewModal";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface TaskCardProps {
-  task: Task
-  onEdit: (taskId: string) => void
-  onDelete: (taskId: string) => void
+    task: Task;
+    onEdit: (taskId: string) => void;
+    onDelete: (taskId: string) => void;
 }
 
 export function TaskCard({ task, onEdit, onDelete }: Readonly<TaskCardProps>) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const completedSubtasks = task.subtasks?.filter((subtask) => subtask.isCompleted).length || 0
-  const totalSubtasks = task.subtasks?.length ?? 0
+    const completedSubtasks =
+        task.subtasks?.filter((subtask) => subtask.isCompleted).length ?? 0;
+    const totalSubtasks = task.subtasks?.length ?? 0;
 
-  return (
-    <>
-      <div
-        className="bg-card p-4 rounded-lg shadow-sm cursor-pointer hover:shadow-md transition-shadow"
-        onClick={() => setIsModalOpen(true)}
-      >
-        <h3 className="font-medium text-card-foreground">{task.title}</h3>
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setIsModalOpen(true);
+        }
+    };
 
-        {task.subtasks && task.subtasks.length > 0 && (
-          <p className="text-xs text-muted-foreground mt-2">
-            {completedSubtasks} of {totalSubtasks} subtasks
-          </p>
-        )}
-      </div>
+    return (
+        <>
+            <button
+                type="button"
+                ref={buttonRef}
+                className="w-full text-left bg-transparent border-0 p-0 m-0"
+                onClick={() => setIsModalOpen(true)}
+                onKeyDown={handleKeyDown}
+                aria-haspopup="dialog"
+                aria-expanded={isModalOpen}
+            >
+                <Card className="rounded-lg shadow-sm cursor-pointer hover:shadow-md transition-shadow">
+                    <CardHeader className="p-4">
+                        <CardTitle className="text-base font-medium">
+                            {task.title}
+                        </CardTitle>
+                        {task.subtasks && task.subtasks.length > 0 && (
+                            <p className="text-xs text-muted-foreground mt-1">
+                                {completedSubtasks} of {totalSubtasks} subtasks
+                            </p>
+                        )}
+                    </CardHeader>
+                </Card>
+            </button>
 
-      <TaskViewModal
-        task={task}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onEdit={onEdit}
-        onDelete={onDelete}
-      />
-    </>
-  )
+            <TaskViewModal
+                task={task}
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onEdit={onEdit}
+                onDelete={onDelete}
+            />
+        </>
+    );
 }
-

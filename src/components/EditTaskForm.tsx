@@ -65,7 +65,7 @@ export function EditTaskForm({
         resolver: zodResolver(taskFormSchema),
         defaultValues: {
             title: task.title,
-            description: task.description || "",
+            description: task.description ?? "",
             subtasks: task.subtasks,
         },
     });
