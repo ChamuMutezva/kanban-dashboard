@@ -1,0 +1,216 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { Plus, X } from "lucide-react"
+
+import {
+    CustomDialog,
+    CustomDialogContent,
+    CustomDialogDescription,
+    CustomDialogFooter,
+    CustomDialogHeader,
+    CustomDialogTitle,
+} from "@/components/ui/custom-dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+
+// Define the form schema
+const formSchema = z.object({
+  name: z.string().min(1, "Board name is required").max(50, "Board name must be less than 50 characters"),
+  columns: z
+    .array(
+      z.object({
+        id: z.string().optional(), // Optional for new columns
+        name: z.string().min(1, "Column name is required"),
+      }),
+    )
+    .min(1, "At least one column is required"),
+})
+
+type FormValues = z.infer<typeof formSchema>
+
+interface Column {
+  id: string
+  name: string
+}
+
+interface Board {
+  id: string
+  name: string
+  slug: string
+  columns: Column[]
+}
+
+interface EditBoardDialogProps {
+  board: Board | null
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}
+
+export function EditBoardDialog({ board, open, onOpenChange }: Readonly<EditBoardDialogProps>) {
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // Initialize the form with default values
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      columns: [{ name: "" }],
+    },
+  })
+
+  // Update form values when the board changes
+  useEffect(() => {
+    if (board) {
+      form.reset({
+        name: board.name,
+        columns: board.columns?.length ? board.columns.map((col) => ({ id: col.id, name: col.name })) : [{ name: "" }],
+      })
+    }
+  }, [board, form])
+
+  // Add a new column
+  const addColumn = () => {
+    const currentColumns = form.getValues("columns")
+    form.setValue("columns", [...currentColumns, { name: "" }])
+  }
+
+  // Remove a column
+  const removeColumn = (index: number) => {
+    const currentColumns = form.getValues("columns")
+    form.setValue(
+      "columns",
+      currentColumns.filter((_, i) => i !== index),
+    )
+  }
+
+  // Handle form submission
+  const onSubmit = async (data: FormValues) => {
+    if (!board) return
+
+    setIsSubmitting(true)
+    setError(null)
+
+    try {
+      // Send the data to your API
+      const response = await fetch(`/api/boards/${board.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          columns: data.columns,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to update board")
+      }
+
+      const updatedBoard = await response.json()
+
+      // Close the dialog
+      onOpenChange(false)
+
+      // Navigate to the updated board (in case the slug changed)
+      if (updatedBoard.slug !== board.slug) {
+        router.push(`/boards/${updatedBoard.slug}`)
+      } else {
+        // Just refresh the page to show the updated board
+        router.refresh()
+      }
+    } catch (error) {
+      console.error("Error updating board:", error)
+      setError(error instanceof Error ? error.message : "Failed to update board")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <CustomDialog open={open} onOpenChange={onOpenChange}>
+      <CustomDialogContent className="sm:max-w-[425px]">
+        <CustomDialogHeader>
+          <CustomDialogTitle>Edit Board</CustomDialogTitle>
+          <CustomDialogDescription>Update your board name and columns.</CustomDialogDescription>
+        </CustomDialogHeader>
+
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Board Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. Web Design Project" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="space-y-3">
+              <FormLabel>Board Columns</FormLabel>
+              {form.watch("columns").map((column, index) => (
+                <div key={column.id ?? index} className="flex items-center gap-2">
+                  <FormField
+                    control={form.control}
+                    name={`columns.${index}.name`}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormControl>
+                          <Input placeholder="e.g. Todo" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => removeColumn(index)}
+                    disabled={form.watch("columns").length <= 1}
+                  >
+                    <X className="h-4 w-4" />
+                    <span className="sr-only">Remove column</span>
+                  </Button>
+                </div>
+              ))}
+
+              <Button type="button" variant="outline" className="w-full" onClick={addColumn}>
+                <Plus className="mr-2 h-4 w-4" />
+                Add New Column
+              </Button>
+            </div>
+
+            <CustomDialogFooter>
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? "Saving..." : "Save Changes"}
+              </Button>
+            </CustomDialogFooter>
+          </form>
+        </Form>
+      </CustomDialogContent>
+    </CustomDialog>
+  )
+}
+
