@@ -125,8 +125,8 @@ export function TaskViewModal({
             </p>
             <div className="space-y-2">
               {task.subtasks.map((subtask) => (
-                <div key={subtask.id} className="flex items-center gap-2 p-3 rounded-md bg-muted">
-                  <Checkbox id={`modal-${subtask.id}`} checked={subtask.isCompleted} disabled />
+                <div key={subtask.id} className="flex items-start gap-2 p-3 rounded-md border border-border bg-muted/80 dark:bg-muted">
+                  <Checkbox id={`modal-${subtask.id}`} checked={subtask.isCompleted} disabled className="mt-1"/>
                   <label
                     htmlFor={`modal-${subtask.id}`}
                     className={`text-sm ${subtask.isCompleted ? "line-through text-muted-foreground" : ""}`}

@@ -76,8 +76,8 @@ export function DeleteBoardDialog({
         <CustomDialog open={open} onOpenChange={onOpenChange}>
             <CustomDialogContent className="sm:max-w-[425px] bg-background border-border">
                 <CustomDialogHeader>
-                    <CustomDialogTitle className="text-foreground">
-                        Delete Board
+                    <CustomDialogTitle className="text-destructive">
+                        Delete this Board?
                     </CustomDialogTitle>
                     <CustomDialogDescription className="text-muted-foreground">
                         Are you sure you want to delete the `{board.name}`
