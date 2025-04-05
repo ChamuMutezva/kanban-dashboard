@@ -145,7 +145,7 @@ export function TaskViewModal({
           <div className="my-4 p-4 border border-destructive/50 rounded-md bg-destructive/10">
             <h3 className="text-sm font-medium text-destructive mb-2">Delete Task</h3>
             <p className="text-sm mb-4">
-              Are you sure you want to delete `{task.title}`? This action cannot be undone.
+              Are you sure you want to delete `{task.title}` task and its subtasks? This action cannot be reversed.
             </p>
             <div className="flex justify-end gap-2">
               <Button variant="outline" size="sm" onClick={handleCancelDelete} disabled={isDeleting}>

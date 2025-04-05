@@ -134,5 +134,6 @@
     }
     body {
         @apply bg-background text-foreground;
+        font-family: var(--font-geist-jakarta-sans), system-ui, sans-serif;
     }
 }

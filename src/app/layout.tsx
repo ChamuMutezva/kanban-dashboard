@@ -12,6 +12,7 @@ import { CurrentBoardHeader } from "@/components/current-board-header";
 const geistJakartaSans = Plus_Jakarta_Sans({
     variable: "--font-geist-jakarta-sans",
     subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -28,9 +29,9 @@ export default async function RootLayout({
     const boards = await getBoards();
 
     return (
-        <html lang="en">
+        <html lang="en"  className={`${geistJakartaSans.variable}`}>
             <body
-                className={`${geistJakartaSans.variable}  antialiased`}
+                className={`font-sans antialiased`}
                 suppressHydrationWarning
             >
                 <ThemeProvider
