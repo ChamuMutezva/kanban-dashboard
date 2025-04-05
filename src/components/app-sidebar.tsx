@@ -34,7 +34,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
     const boardIcon = "/assets/icon-board.svg";
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
-    const { setOpenMobile } = useSidebar();
+    const { setOpenMobile, isMobile } = useSidebar();
 
     function handleBoardClick() {
         setOpenMobile(false);
@@ -52,7 +52,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
                             className={`flex items-center justify-start px-2 gap-2 py-4 rounded-md `}
                         >
                             <NavLogo />
-                            <span className="sr-only">Home</span>
+                            <span className="sr-only">Home page</span>
                         </Link>
 
                         <SidebarGroupLabel>{`All boards(${boards.length})`}</SidebarGroupLabel>
@@ -67,6 +67,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
                                             <SidebarMenuButton
                                                 asChild
                                                 isActive={isActive}
+                                                size={isMobile ? "sm" : "lg"}
                                             >
                                                 <Link
                                                     href={`/boards/${item.slug}`}
@@ -92,6 +93,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
                                 <Button
                                     variant={"ghost"}
                                     className="justify-start px-2"
+                                    size={isMobile ? "sm" : "lg"}
                                     onClick={() => setCreateDialogOpen(true)}
                                 >
                                     <Image
