@@ -1,8 +1,6 @@
-import { Checkbox } from "@/components/ui/checkbox";
 import { getBoardBySlug } from "../../../../lib/boards";
 import {
     Card,
-    CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
@@ -83,7 +81,7 @@ export default async function Page({
                                 data-column-id={column.id} // Add data attribute for column detection
                             >
                                 <h3
-                                    className="text-md font-semibold text-mid-grey uppercase tracking-wider mb-6
+                                    className="text-sm font-semibold text-[var(--mid-grey)] uppercase tracking-wider mb-6
                                 flex items-center justify-start gap-2"
                                 >
                                     <span
@@ -133,57 +131,6 @@ function TaskCardContent({ task }: Readonly<{ task: Task }>) {
                     </div>
                 </CardDescription>
             </CardHeader>
-            <CardContent>
-                {/* Optionally show subtasks in a collapsed view */}
-                {task.subtasks.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-light-grey dark:border-dark-grey">
-                        <details className="group">
-                            <summary className="text-xs font-medium cursor-pointer list-none flex items-center">
-                                <span className="text-mid-grey">
-                                    View Subtasks
-                                </span>
-                                <svg
-                                    className="ml-2 h-4 w-4 text-mid-grey transition-transform group-open:rotate-180"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </summary>
-                            <ul className="mt-3 space-y-2">
-                                {task.subtasks.map((subtask) => (
-                                    <li
-                                        key={subtask.id}
-                                        className="flex items-start gap-2"
-                                    >
-                                        <Checkbox
-                                            id={subtask.id}
-                                            checked={subtask.isCompleted}
-                                            disabled
-                                            className="mt-0.5"
-                                        />
-                                        <label
-                                            htmlFor={subtask.id}
-                                            className={`text-sm ${
-                                                subtask.isCompleted
-                                                    ? "line-through text-mid-grey"
-                                                    : "text-black dark:text-white"
-                                            }`}
-                                        >
-                                            {subtask.title}
-                                        </label>
-                                    </li>
-                                ))}
-                            </ul>
-                        </details>
-                    </div>
-                )}
-            </CardContent>
         </Card>
     );
 }

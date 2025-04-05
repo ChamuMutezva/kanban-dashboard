@@ -97,7 +97,7 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
 
     return (
         <div className="flex items-center justify-between w-full pr-4">
-            <h1 className="text-2xl font-bold">
+            <h1 className="text-lg sm:text-2xl font-bold">
                 {currentBoard ? currentBoard.name : "Dashboard"}
             </h1>
             <div className="flex items-center gap-2">
