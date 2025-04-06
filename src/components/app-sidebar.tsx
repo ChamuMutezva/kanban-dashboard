@@ -110,6 +110,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
+                    {/* dark and light mode toggle */}
                     <ModeToggle />
                 </SidebarContent>
             </Sidebar>

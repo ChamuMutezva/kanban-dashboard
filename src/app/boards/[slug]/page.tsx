@@ -73,35 +73,37 @@ export default async function Page({
                             />
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        {board.columns?.map((column) => (
-                            <div
-                                key={column.id}
-                                className="flex flex-col"
-                                data-column-id={column.id} // Add data attribute for column detection
-                            >
-                                <h3
-                                    className="text-sm font-semibold text-[var(--mid-grey)] uppercase tracking-wider mb-6
-                                flex items-center justify-start gap-2"
+                    <div className="overflow-x-auto pb-4 -mx-8 px-8">
+                        <div className="flex gap-6 min-w-max">
+                            {board.columns?.map((column) => (
+                                <div
+                                    key={column.id}
+                                    className="flex flex-col w-[280px] flex-shrink-0"
+                                    data-column-id={column.id}
                                 >
-                                    <span
-                                        className={`before:block before:w-3 before:h-3 before:rounded-full before:mr-2
-                                           ${getBulletColor(column.name)} `}
-                                    ></span>
-                                    {column.name} ({column.tasks.length})
-                                </h3>
-                                <div className="space-y-5">
-                                    {column.tasks?.map((task) => (
-                                        <TaskCardWrapper
-                                            key={task.id}
-                                            task={task}
-                                        >
-                                            <TaskCardContent task={task} />
-                                        </TaskCardWrapper>
-                                    ))}
+                                    <h3
+                                        className="text-sm font-semibold text-[var(--mid-grey)] uppercase tracking-wider mb-6
+                                    flex items-center justify-start gap-2"
+                                    >
+                                        <span
+                                            className={`before:block before:w-3 before:h-3 before:rounded-full before:mr-2
+                                               ${getBulletColor(column.name)} `}
+                                        ></span>
+                                        {column.name} ({column.tasks.length})
+                                    </h3>
+                                    <div className="space-y-5 min-h-[200px]">
+                                        {column.tasks?.map((task) => (
+                                            <TaskCardWrapper
+                                                key={task.id}
+                                                task={task}
+                                            >
+                                                <TaskCardContent task={task} />
+                                            </TaskCardWrapper>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </>
             )}
