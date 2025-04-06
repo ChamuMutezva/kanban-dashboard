@@ -1,9 +1,48 @@
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/prisma";
 
 type Params = Promise<{
     boardId: string;
 }>;
+
+// Get a specific board
+export async function GET(req: NextRequest, segmentData: { params: Params }) {
+    const params = await segmentData.params;
+    const boardId = params.boardId;
+
+    try {
+        const board = await prisma.board.findUnique({
+            where: { id: boardId },
+            include: {
+                columns: {
+                    orderBy: { order: "asc" },
+                    include: {
+                        tasks: {
+                            include: {
+                                subtasks: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+
+        if (!board) {
+            return NextResponse.json(
+                { error: "Board not found" },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json(board);
+    } catch (error) {
+        console.error("Error fetching board:", error);
+        return NextResponse.json(
+            { error: "Failed to fetch board" },
+            { status: 500 }
+        );
+    }
+}
 
 export async function PATCH(request: Request, segmentData: { params: Params }) {
     try {
