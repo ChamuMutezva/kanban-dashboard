@@ -5,16 +5,16 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Plus, X } from "lucide-react"
+import { Plus, X, Loader2, AlertCircle } from "lucide-react"
 
 import {
-    CustomDialog,
-    CustomDialogContent,
-    CustomDialogDescription,
-    CustomDialogFooter,
-    CustomDialogHeader,
-    CustomDialogTitle,
-} from "@/components/ui/custom-dialog";
+  CustomDialog,
+  CustomDialogContent,
+  CustomDialogDescription,
+  CustomDialogFooter,
+  CustomDialogHeader,
+  CustomDialogTitle,
+} from "@/components/ui/custom-dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -67,15 +67,23 @@ export function EditBoardDialog({ board, open, onOpenChange }: Readonly<EditBoar
     },
   })
 
-  // Update form values when the board changes
+  // Update form values when the board changes or dialog opens
   useEffect(() => {
-    if (board) {
+    if (board && open) {
+      console.log("Setting form values with board data:", board)
+      // Reset the form with the current board data
       form.reset({
         name: board.name,
-        columns: board.columns?.length ? board.columns.map((col) => ({ id: col.id, name: col.name })) : [{ name: "" }],
+        columns: board.columns?.length
+          ? board.columns.map((col) => ({
+              id: col.id,
+              name: col.name,
+            }))
+          : [{ name: "" }],
       })
+      setError(null)
     }
-  }, [board, form])
+  }, [board, form, open])
 
   // Add a new column
   const addColumn = () => {
@@ -100,6 +108,8 @@ export function EditBoardDialog({ board, open, onOpenChange }: Readonly<EditBoar
     setError(null)
 
     try {
+      console.log("Submitting form data:", data)
+
       // Send the data to your API
       const response = await fetch(`/api/boards/${board.id}`, {
         method: "PATCH",
@@ -118,6 +128,7 @@ export function EditBoardDialog({ board, open, onOpenChange }: Readonly<EditBoar
       }
 
       const updatedBoard = await response.json()
+      console.log("Board updated successfully:", updatedBoard)
 
       // Close the dialog
       onOpenChange(false)
@@ -125,10 +136,10 @@ export function EditBoardDialog({ board, open, onOpenChange }: Readonly<EditBoar
       // Navigate to the updated board (in case the slug changed)
       if (updatedBoard.slug !== board.slug) {
         router.push(`/boards/${updatedBoard.slug}`)
-      } else {
-        // Just refresh the page to show the updated board
-        router.refresh()
       }
+
+      // Refresh the page to show the updated board
+      router.refresh()
     } catch (error) {
       console.error("Error updating board:", error)
       setError(error instanceof Error ? error.message : "Failed to update board")
@@ -147,6 +158,7 @@ export function EditBoardDialog({ board, open, onOpenChange }: Readonly<EditBoar
 
         {error && (
           <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4 mr-2" />
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
@@ -188,7 +200,7 @@ export function EditBoardDialog({ board, open, onOpenChange }: Readonly<EditBoar
                     variant="ghost"
                     size="icon"
                     onClick={() => removeColumn(index)}
-                    disabled={form.watch("columns").length <= 1}
+                    disabled={form.watch("columns").length <= 1 || isSubmitting}
                   >
                     <X className="h-4 w-4" />
                     <span className="sr-only">Remove column</span>
@@ -196,15 +208,26 @@ export function EditBoardDialog({ board, open, onOpenChange }: Readonly<EditBoar
                 </div>
               ))}
 
-              <Button type="button" variant="outline" className="w-full" onClick={addColumn}>
+              <Button type="button" variant="outline" className="w-full" onClick={addColumn} disabled={isSubmitting}>
                 <Plus className="mr-2 h-4 w-4" />
                 Add New Column
               </Button>
             </div>
 
             <CustomDialogFooter>
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Saving..." : "Save Changes"}
+              <Button
+                type="submit"
+                className="w-full bg-[oklch(0.55_0.1553_281.45)] hover:bg-[oklch(0.55_0.1553_281.45)]/90 text-white"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  "Save Changes"
+                )}
               </Button>
             </CustomDialogFooter>
           </form>
