@@ -121,7 +121,7 @@ function TaskCardContent({ task }: Readonly<{ task: Task }>) {
     return (
         <Card className="rounded-lg shadow-sm border hover:shadow-md transition-shadow">
             <CardHeader>
-                <CardTitle className="font-bold mb-2">{task.title}</CardTitle>
+                <CardTitle className="font-bold mb-2 leading-5">{task.title}</CardTitle>
                 <CardDescription>
                     {task.description && (
                         <p className="text-sm text-mid-grey mb-3">
