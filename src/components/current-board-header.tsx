@@ -41,7 +41,8 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
   // Find the current board based on the URL
   useEffect(() => {
     if (pathname.startsWith("/boards/")) {
-      const slug = pathname.split("/").pop() // Get the slug from the URL
+      const slug = pathname.split("/").pop() // Get the slug from the URL     
+      // Find the board with the matching slug
       const board = boards.find((board) => board.slug === slug) || null
       setCurrentBoard(board)
 
@@ -58,7 +59,7 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
   // Fetch columns for the current board
   const fetchColumnsForBoard = async (boardId: string) => {
     try {
-      const response = await fetch(`/api/boards/${boardId}/columns`)
+      const response = await fetch(`/api/boards/${boardId}/columns`)     
       if (response.ok) {
         const data = await response.json()
         setColumns(data)
