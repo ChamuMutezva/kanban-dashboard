@@ -147,3 +147,54 @@ export async function deleteTask(taskId: string): Promise<void> {
   }
 }
 
+/**
+ * Adds columns to a board
+ */
+export async function addColumnsToBoard(boardId: string, columns: { name: string }[]): Promise<void> {
+  try {
+    console.log("Adding columns to board:", boardId, columns)
+
+    // Get the board to ensure it exists and to get the slug
+    const board = await prisma.board.findUnique({
+      where: { id: boardId },
+      select: { slug: true },
+    })
+
+    if (!board) {
+      throw new Error("Board not found")
+    }
+
+    // Get the highest existing order value
+    const highestOrderColumn = await prisma.column.findFirst({
+      where: { boardId },
+      orderBy: { order: "desc" },
+      select: { order: true },
+    })
+
+    const startOrder = (highestOrderColumn?.order || 0) + 1
+
+    // Create the columns with sequential order values
+    await prisma.$transaction(
+      columns.map((column, index) =>
+        prisma.column.create({
+          data: {
+            name: column.name,
+            boardId: boardId,
+            order: startOrder + index, // Assign sequential order values
+          },
+        }),
+      ),
+    )
+
+    console.log("Columns added successfully")
+
+    // Revalidate the board page
+    revalidatePath(`/boards/${board.slug}`)
+  } catch (error) {
+    console.error("Error adding columns:", error)
+    throw new Error(`Failed to add columns: ${error instanceof Error ? error.message : "Unknown error"}`)
+  }
+}
+
+
+
