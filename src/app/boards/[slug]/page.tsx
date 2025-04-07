@@ -61,11 +61,36 @@ export default async function Page({
             {board.columns.length < 1 ? (
                 <NoColumnsFound boardId={board.id} boardSlug={board.slug} />
             ) : (
-                <>
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-2xl font-bold sr-only">
-                            {board.name}
-                        </h2>
+                <div className="overflow-x-auto pb-4 -mx-8 px-8">
+                    <div className="flex gap-6 min-w-max">
+                        {board.columns?.map((column) => (
+                            <div
+                                key={column.id}
+                                className="flex flex-col w-[280px] flex-shrink-0"
+                                data-column-id={column.id}
+                            >
+                                <h2
+                                    className="text-sm font-semibold text-[var(--mid-grey)] uppercase tracking-wider mb-6
+                                    flex items-center justify-start gap-2"
+                                >
+                                    <span
+                                        className={`before:block before:w-3 before:h-3 before:rounded-full before:mr-2
+                                               ${getBulletColor(column.name)} `}
+                                    ></span>
+                                    {column.name} ({column.tasks.length})
+                                </h2>
+                                <div className="space-y-5 min-h-[200px]">
+                                    {column.tasks?.map((task) => (
+                                        <TaskCardWrapper
+                                            key={task.id}
+                                            task={task}
+                                        >
+                                            <TaskCardContent task={task} />
+                                        </TaskCardWrapper>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                         <div className="flex gap-2 ml-auto">
                             <AddColumnButton
                                 boardId={board.id}
@@ -73,39 +98,7 @@ export default async function Page({
                             />
                         </div>
                     </div>
-                    <div className="overflow-x-auto pb-4 -mx-8 px-8">
-                        <div className="flex gap-6 min-w-max">
-                            {board.columns?.map((column) => (
-                                <div
-                                    key={column.id}
-                                    className="flex flex-col w-[280px] flex-shrink-0"
-                                    data-column-id={column.id}
-                                >
-                                    <h3
-                                        className="text-sm font-semibold text-[var(--mid-grey)] uppercase tracking-wider mb-6
-                                    flex items-center justify-start gap-2"
-                                    >
-                                        <span
-                                            className={`before:block before:w-3 before:h-3 before:rounded-full before:mr-2
-                                               ${getBulletColor(column.name)} `}
-                                        ></span>
-                                        {column.name} ({column.tasks.length})
-                                    </h3>
-                                    <div className="space-y-5 min-h-[200px]">
-                                        {column.tasks?.map((task) => (
-                                            <TaskCardWrapper
-                                                key={task.id}
-                                                task={task}
-                                            >
-                                                <TaskCardContent task={task} />
-                                            </TaskCardWrapper>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </>
+                </div>
             )}
         </div>
     );
@@ -121,7 +114,9 @@ function TaskCardContent({ task }: Readonly<{ task: Task }>) {
     return (
         <Card className="rounded-lg shadow-sm border hover:shadow-md transition-shadow">
             <CardHeader>
-                <CardTitle className="font-bold mb-2 leading-5">{task.title}</CardTitle>
+                <CardTitle className="font-bold mb-2 leading-5">
+                    {task.title}
+                </CardTitle>
                 <CardDescription>
                     {task.description && (
                         <p className="text-sm text-mid-grey mb-3">
