@@ -134,8 +134,7 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
                         disabled={!hasColumns}
                         className="flex items-center gap-2"
                     >
-                        <Image
-                            className="dark:invert"
+                        <Image                          
                             src={iconAddTask || "/placeholder.svg"}
                             alt=""
                             width={12}
