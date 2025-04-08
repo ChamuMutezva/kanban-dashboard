@@ -83,7 +83,10 @@ export function TaskViewModal({
         }
       }}
     >
-      <CustomDialogContent className="sm:max-w-md w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] sm:w-full rounded-sm">
+      <CustomDialogContent
+        className="sm:max-w-md w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] sm:w-full sm:max-w-md"
+        onClick={(e) => e.stopPropagation()} // Stop click propagation
+      >
         <CustomDialogHeader className="flex flex-row items-start justify-between">
           <div>
             <CustomDialogTitle className="text-xl">{task.title}</CustomDialogTitle>
@@ -125,7 +128,10 @@ export function TaskViewModal({
             </p>
             <div className="space-y-2">
               {task.subtasks.map((subtask) => (
-                <div key={subtask.id} className="flex items-start gap-2 p-3 rounded-md border border-border bg-muted/80 dark:bg-muted">
+                <div
+                  key={subtask.id}
+                  className="flex items-start gap-2 p-3 rounded-md border border-border bg-muted/80 dark:bg-muted"
+                >
                   <span className="h-[1lh]">
                     <Checkbox id={`modal-${subtask.id}`} checked={subtask.isCompleted} disabled />
                   </span>
@@ -178,4 +184,3 @@ export function TaskViewModal({
     </CustomDialog>
   )
 }
-
