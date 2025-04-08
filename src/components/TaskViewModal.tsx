@@ -83,7 +83,7 @@ export function TaskViewModal({
         }
       }}
     >
-      <CustomDialogContent className="sm:max-w-md">
+      <CustomDialogContent className="sm:max-w-md w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] sm:w-full rounded-sm">
         <CustomDialogHeader className="flex flex-row items-start justify-between">
           <div>
             <CustomDialogTitle className="text-xl">{task.title}</CustomDialogTitle>

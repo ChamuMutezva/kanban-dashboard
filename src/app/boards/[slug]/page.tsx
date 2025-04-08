@@ -118,11 +118,13 @@ function TaskCardContent({ task }: Readonly<{ task: Task }>) {
                     {task.title}
                 </CardTitle>
                 <CardDescription>
+                    {/*
                     {task.description && (
                         <p className="text-sm text-mid-grey mb-3">
                             {task.description}
                         </p>
                     )}
+                        */}
                     <div className="text-xs text-mid-grey font-bold">
                         {completedSubtasks} of {totalSubtasks} subtasks
                     </div>
