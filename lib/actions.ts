@@ -20,6 +20,7 @@ export async function updateTask(task: Task): Promise<void> {
         data: {
           title: task.title,
           description: task.description,
+          columnId: task.columnId, // Add this line to update the column
         },
       })
 
@@ -195,6 +196,3 @@ export async function addColumnsToBoard(boardId: string, columns: { name: string
     throw new Error(`Failed to add columns: ${error instanceof Error ? error.message : "Unknown error"}`)
   }
 }
-
-
-

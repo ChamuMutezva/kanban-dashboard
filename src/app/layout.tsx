@@ -29,11 +29,8 @@ export default async function RootLayout({
     const boards = await getBoards();
 
     return (
-        <html lang="en"  className={`${geistJakartaSans.variable}`}>
-            <body
-                className={`font-sans antialiased`}
-                suppressHydrationWarning
-            >
+        <html lang="en" className={`${geistJakartaSans.variable}`}>
+            <body className={`font-sans antialiased`} suppressHydrationWarning>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -44,7 +41,6 @@ export default async function RootLayout({
                         {/* Pass the boards data to AppSidebar. AppSidebar is client component 
                         Hence I need to fetch the data in the server using async */}
                         <AppSidebar boards={boards} />
-
                         <main className="w-full">
                             <div className="flex gap-2 py-4 items-center bg-white dark:bg-[var(--almost-black)] ">
                                 <SidebarTrigger />

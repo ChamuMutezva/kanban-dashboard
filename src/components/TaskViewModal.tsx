@@ -8,7 +8,7 @@ import {
     CustomDialogContent,
     CustomDialogDescription,
     CustomDialogHeader,
-    CustomDialogTitle  
+    CustomDialogTitle,
 } from "@/components/ui/custom-dialog";
 import {
     DropdownMenu,
@@ -38,6 +38,7 @@ export interface Task {
     title: string;
     description?: string | null;
     subtasks: Subtask[];
+    columnId?: string; // Add columnId to the Task interface
 }
 
 interface TaskViewModalProps {
@@ -94,7 +95,7 @@ export function TaskViewModal({
             }}
         >
             <CustomDialogContent
-                className="sm:max-w-md w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] sm:w-full"
+                className="sm:max-w-md w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] sm:w-full sm:max-w-md"
                 onClick={(e) => e.stopPropagation()} // Stop click propagation
             >
                 <CustomDialogHeader className="flex flex-row items-start justify-between">
@@ -223,17 +224,6 @@ export function TaskViewModal({
                         </div>
                     </div>
                 )}
-                {/*
-        <CustomDialogFooter className="mt-4">
-          {!showDeleteConfirm && (
-            <DialogClose asChild>
-              <Button variant="outline" disabled={isDeleting}>
-                Close
-              </Button>
-            </DialogClose>
-          )}
-        </CustomDialogFooter>
-        */}
             </CustomDialogContent>
         </CustomDialog>
     );
