@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { EllipsisVertical } from "lucide-react";
 import { CreateTaskButton } from "./create-task-button";
+import { useSidebar } from "@/components/ui/sidebar";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -38,6 +39,8 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
+    const {  open } = useSidebar();
+        console.log("Sidebar open:", open);
     // Find the current board based on the URL
     useEffect(() => {
         if (pathname.startsWith("/boards/")) {
@@ -125,7 +128,7 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
             <h1 className="text-lg sm:text-2xl font-bold">
                 {currentBoard ? currentBoard.name : "Dashboard"}
             </h1>
-            <div className="flex items-center gap-2">
+            <div className={`flex items-center gap-2 ${open ? 'md:mr-[2rem]' : ''} transition-all duration-300`}>
                 {currentBoard && (
                     <CreateTaskButton
                         boardId={currentBoard.id}
@@ -134,7 +137,7 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
                         disabled={!hasColumns}
                         className="flex items-center gap-2"
                     >
-                        <Image                          
+                        <Image
                             src={iconAddTask || "/placeholder.svg"}
                             alt=""
                             width={12}
