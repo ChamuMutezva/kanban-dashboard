@@ -6,7 +6,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import "./globals.css";
 import { Separator } from "@/components/ui/separator";
-import { getBoards } from "../../lib/boards";
+import { getBoards } from "@/lib/boards";
 import { CurrentBoardHeader } from "@/components/current-board-header";
 
 const geistJakartaSans = Plus_Jakarta_Sans({
@@ -30,7 +30,7 @@ export default async function RootLayout({
 
     return (
         <html lang="en" className={`${geistJakartaSans.variable}`}>
-            <body className={`font-sans antialiased`} suppressHydrationWarning>
+            <body className={`font-sans antialiased`} suppressHydrationWarning={true}>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
