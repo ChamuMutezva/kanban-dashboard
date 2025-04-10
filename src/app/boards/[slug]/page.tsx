@@ -1,4 +1,4 @@
-import { getBoardBySlug } from "@/lib/boards";
+import { getBoardBySlug } from "../../../../lib/boards";
 import {
     Card,
     CardDescription,
