@@ -76,7 +76,7 @@ export default async function Page({
     }
 
     return (
-        <div className="p-8">
+        <main className="p-8">
             {board.columns.length < 1 ? (
                 <NoColumnsFound boardId={board.id} boardSlug={board.slug} />
             ) : (
@@ -123,7 +123,7 @@ export default async function Page({
                     </Suspense>
                 </div>
             )}
-        </div>
+        </main>
     );
 }
 

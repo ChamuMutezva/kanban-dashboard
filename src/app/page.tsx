@@ -43,13 +43,13 @@ export default async function Home() {
     const boards = (await getBoards()) as unknown as Board[];
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <header className="mb-8">
-                <h1 className="text-3xl font-bold mb-2">My Kanban Boards</h1>
+        <main className="container mx-auto px-4 py-8">
+            <div className="mb-8">
+                <h2 className="text-3xl font-bold mb-2">My Kanban Boards</h2>
                 <p className="text-muted-foreground">
                     Manage your projects with these boards
                 </p>
-            </header>
+            </div>
 
             {boards.length < 1 ? (
                 <NoBoardsFound />
@@ -87,14 +87,14 @@ export default async function Home() {
                     ))}
                 </div>
             )}
-        </div>
+        </main>
     );
 }
 
 function NoBoardsFound() {
     return (
         <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/20">
-            <h2 className="text-xl font-semibold mb-4">No boards found</h2>
+            <h3 className="text-xl font-semibold mb-4">No boards found</h3>
             <p className="text-muted-foreground mb-6">
                 Create your first board to get started
             </p>
