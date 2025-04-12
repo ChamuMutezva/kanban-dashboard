@@ -163,7 +163,7 @@ export function TaskViewModal({
                                 {task.subtasks.map((subtask) => (
                                     <div
                                         key={subtask.id}
-                                        className="flex items-start gap-2 p-3 rounded-md border border-border bg-muted/80 dark:bg-muted"
+                                        className="flex items-start gap-2 p-3 rounded-md border border-border bg-muted/50 dark:bg-muted"
                                     >
                                         <span className="h-[1lh]">
                                             <Checkbox
