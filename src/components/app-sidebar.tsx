@@ -43,7 +43,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
     return (
         <>
             <Sidebar>
-                <SidebarContent className="justify-between">
+                <SidebarContent className="justify-between pb-8">
                     <SidebarGroup>
                         <Link
                             href="/"
