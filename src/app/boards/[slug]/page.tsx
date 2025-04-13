@@ -9,6 +9,7 @@ import { NoColumnsFound } from "@/components/no-columns-found";
 import { AddColumnButton } from "@/components/add-column-button";
 import { TaskCardWrapper } from "@/components/TaskCardWrapper";
 import { Suspense } from "react";
+import { Plus } from "lucide-react";
 
 // Define types for our data structure
 interface Subtask {
@@ -23,6 +24,12 @@ interface Task {
     title: string;
     description?: string | null;
     subtasks: Subtask[];
+}
+
+interface Column {
+    id: string;
+    name: string;
+    tasks: Task[];
 }
 
 // Loading skeleton for columns
@@ -101,16 +108,22 @@ export default async function Page({
                                         ></span>
                                         {column.name} ({column.tasks.length})
                                     </h2>
-                                    <div className="space-y-5 min-h-[200px]">
-                                        {column.tasks?.map((task) => (
-                                            <TaskCardWrapper
-                                                key={task.id}
-                                                task={task}
-                                            >
-                                                <TaskCardContent task={task} />
-                                            </TaskCardWrapper>
-                                        ))}
-                                    </div>
+                                    {column.tasks.length === 0 ? (
+                                        <TaskSkeleton column={column}/>
+                                    ) : (
+                                        <div className="space-y-5 min-h-[200px]">
+                                            {column.tasks?.map((task) => (
+                                                <TaskCardWrapper
+                                                    key={task.id}
+                                                    task={task}
+                                                >
+                                                    <TaskCardContent
+                                                        task={task}
+                                                    />
+                                                </TaskCardWrapper>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                             <div className="flex items-start mt-6">
@@ -147,5 +160,18 @@ function TaskCardContent({ task }: Readonly<{ task: Task }>) {
                 </CardDescription>
             </CardHeader>
         </Card>
+    );
+}
+
+function TaskSkeleton({ column }: Readonly<{ column: Column }>) {
+    return (
+        <div className="h-24 bg-muted rounded-lg shadow-sm border hover:shadow-md transition-shadow ">
+            <div className="flex flex-col items-center justify-center h-full">
+                <Plus className="w-6 h-6 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground">
+                    Create a new <span className="font-bold">{`${column.name}`}</span> task
+                </p>
+            </div>
+        </div>
     );
 }

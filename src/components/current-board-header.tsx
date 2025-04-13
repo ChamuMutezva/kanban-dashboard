@@ -39,8 +39,8 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-    const {  open } = useSidebar();
-        console.log("Sidebar open:", open);
+    const { open } = useSidebar();
+
     // Find the current board based on the URL
     useEffect(() => {
         if (pathname.startsWith("/boards/")) {
@@ -128,7 +128,11 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
             <h1 className="text-lg sm:text-2xl font-bold">
                 {currentBoard ? currentBoard.name : "Dashboard"}
             </h1>
-            <div className={`flex items-center gap-2 ${open ? 'md:mr-[2rem]' : ''} transition-all duration-300`}>
+            <div
+                className={`flex items-center gap-2 ${
+                    open ? "md:mr-[2rem]" : ""
+                } transition-all duration-300`}
+            >
                 {currentBoard && (
                     <CreateTaskButton
                         boardId={currentBoard.id}
