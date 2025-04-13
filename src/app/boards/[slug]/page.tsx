@@ -1,4 +1,4 @@
-import { getBoardBySlug } from "../../../../lib/boards";
+import { getBoardBySlug } from "../../../lib/boards";
 import {
     Card,
     CardDescription,
@@ -86,7 +86,7 @@ export default async function Page({
                             {board.columns?.map((column) => (
                                 <div
                                     key={column.id}
-                                    className="flex flex-col w-[280px] flex-shrink-0"
+                                    className="flex flex-col min-w-[280px] flex-shrink-0"
                                     data-column-id={column.id}
                                 >
                                     <h2

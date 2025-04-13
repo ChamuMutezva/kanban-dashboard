@@ -4,7 +4,7 @@ import type React from "react";
 import { useState } from "react";
 import { type Task, TaskViewModal } from "./TaskViewModal";
 import { EditTaskForm } from "./EditTaskForm";
-import { updateTask, deleteTask } from "../../lib/actions";
+import { updateTask, deleteTask } from "../lib/actions";
 import { useRouter } from "next/navigation";
 import { ClickableCard } from "./ClickableCard";
 

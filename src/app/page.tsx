@@ -1,4 +1,4 @@
-import { getBoards } from "../../lib/boards";
+import { getBoards } from "../lib/boards";
 import Link from "next/link";
 import {
     Card,

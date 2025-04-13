@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import type { Task } from "@/components/TaskViewModal"
-import prisma from "./prisma"
+import prisma from "@/lib/prisma"
 
 /**
  * Updates a task in the database
