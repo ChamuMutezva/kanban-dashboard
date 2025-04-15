@@ -40,6 +40,22 @@ Users should be able to:
 - **Bonus**: Keep track of any changes, even after refreshing the browser (`localStorage` could be used for this if you're not building out a full-stack app)
 - **Bonus**: Build this project as a full-stack application
 
+- the `AppSidebar` is a client component which is imported in the layout component. It consist of the main navigation elements and it is the primary navigation component. The boards are to be fetched from the neon database using prisma. The connection string includes the user name, password, hostname, and database name.
+- The connection string includes the user name, password, hostname, and database name.
+
+ ```js
+ datasource db {
+  provider = "postgresql"
+  url   = env("DATABASE_URL")
+}
+```
+
+- Add a DATABASE_URL variable to your .env file and set it to the Neon connection string that you copied in the previous step. We also recommend adding ?sslmode=require to the end of the connection string to ensure a secure connection.
+
+### Connect Neon from Prisma
+
+- Retrieve your Neon connection string. You can find it by clicking the Connect button on your Project Dashboard. Select a branch, a user, and the database you want to connect to. A connection string is constructed for you. For the complete information see the following docs [Connecting to neon with Prisma](https://neon.tech/docs/guides/prisma#connect-to-neon-from-prisma)
+
 ### Screenshot
 
 Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
