@@ -17,6 +17,7 @@ import { EditBoardDialog } from "./edit-board-dialog";
 import { DeleteBoardDialog } from "./delete-board-dialog";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import NavLogo from "./nav-logo";
 
 interface Board {
     id: string;
@@ -125,9 +126,15 @@ export function CurrentBoardHeader({ boards }: Readonly<{ boards: Board[] }>) {
 
     return (
         <div className="flex items-center justify-between w-full pr-4">
-            <h1 className="text-lg sm:text-2xl font-bold">
-                {currentBoard ? currentBoard.name : "Dashboard"}
-            </h1>
+            <div className="flex items-center gap-2">
+                {!open && <NavLogo />}
+                {!open && (
+                    <div className="hidden md:block w-[1px] h-6 bg-muted" />
+                )}
+                <h1 className="text-lg sm:text-2xl font-bold">
+                    {currentBoard ? currentBoard.name : "Dashboard"}
+                </h1>
+            </div>
             <div
                 className={`flex items-center gap-2 ${
                     open ? "md:mr-[2rem]" : ""

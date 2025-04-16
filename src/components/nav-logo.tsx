@@ -21,6 +21,7 @@ function NavLogo() {
                     alt="logo"
                     fill
                     priority
+                    aria-hidden="true"
                 />
             </div>
 
