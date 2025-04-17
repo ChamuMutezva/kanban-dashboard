@@ -109,7 +109,7 @@ export default async function Page({
                                         {column.name} ({column.tasks.length})
                                     </h2>
                                     {column.tasks.length === 0 ? (
-                                        <TaskSkeleton column={column}/>
+                                        <TaskSkeleton column={column} />
                                     ) : (
                                         <div className="space-y-5 min-h-[200px]">
                                             {column.tasks?.map((task) => (
@@ -153,10 +153,8 @@ function TaskCardContent({ task }: Readonly<{ task: Task }>) {
                 <CardTitle className="font-bold mb-2 leading-5">
                     {task.title}
                 </CardTitle>
-                <CardDescription>
-                    <div className="text-xs text-mid-grey font-bold">
-                        {completedSubtasks} of {totalSubtasks} subtasks
-                    </div>
+                <CardDescription className="text-xs text-mid-grey font-bold">
+                    {completedSubtasks} of {totalSubtasks} subtasks
                 </CardDescription>
             </CardHeader>
         </Card>
@@ -169,7 +167,8 @@ function TaskSkeleton({ column }: Readonly<{ column: Column }>) {
             <div className="flex flex-col items-center justify-center h-full">
                 <Plus className="w-6 h-6 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground">
-                    Create a new <span className="font-bold">{`${column.name}`}</span> task
+                    Create a new{" "}
+                    <span className="font-bold">{`${column.name}`}</span> task
                 </p>
             </div>
         </div>
