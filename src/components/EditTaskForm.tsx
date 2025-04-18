@@ -31,7 +31,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import type { Task } from "./TaskViewModal";
+import type { Task } from "@/types/board";
 import { DialogClose } from "./ui/dialog";
 import { useEffect, useState } from "react";
 

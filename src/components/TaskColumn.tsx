@@ -1,7 +1,7 @@
 "use client"
 
 import { TaskCard } from "./TaskCard"
-import type { Task } from "./TaskViewModal"
+import type { Task } from "@/types/board"
 
 interface TaskColumnProps {
   title: string

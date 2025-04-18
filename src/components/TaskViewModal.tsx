@@ -25,22 +25,7 @@ import {
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
-export interface Subtask {
-    id: string;
-    title: string;
-    isCompleted: boolean;
-    taskId: string;
-}
-
-export interface Task {
-    id: string;
-    title: string;
-    description?: string | null;
-    subtasks: Subtask[];
-    columnId?: string; // Add columnId to the Task interface
-}
-
+import { Task } from "@/types/board";
 interface TaskViewModalProps {
     task: Task | null;
     isOpen: boolean;

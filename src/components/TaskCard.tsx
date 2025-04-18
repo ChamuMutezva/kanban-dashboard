@@ -3,7 +3,8 @@
 import type React from "react";
 
 import { useState, useRef } from "react";
-import { type Task, TaskViewModal } from "./TaskViewModal";
+import { TaskViewModal } from "./TaskViewModal";
+import { type Task } from "@/types/board";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface TaskCardProps {

@@ -10,6 +10,7 @@ export interface Task {
     title: string;
     description?: string | null;
     subtasks: Subtask[];
+    columnId?: string; // Add columnId to the Task interface
 }
 
 export interface Column {
