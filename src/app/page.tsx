@@ -10,34 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Columns } from "lucide-react";
-
-// Define the types for our data structure
-interface Subtask {
-    id: string;
-    title: string;
-    isCompleted: boolean;
-}
-
-interface Task {
-    id: string;
-    title: string;
-    description?: string;
-    status?: string;
-    subtasks: Subtask[];
-}
-
-interface Column {
-    id: string;
-    name: string;
-    tasks: Task[];
-}
-
-interface Board {
-    id: string;
-    name: string;
-    slug: string;
-    columns: Column[];
-}
+import { Board } from "@/types/board";
 
 export default async function Home() {
     const boards = (await getBoards()) as unknown as Board[];

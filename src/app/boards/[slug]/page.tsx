@@ -10,27 +10,7 @@ import { AddColumnButton } from "@/components/add-column-button";
 import { TaskCardWrapper } from "@/components/TaskCardWrapper";
 import { Suspense } from "react";
 import { Plus } from "lucide-react";
-
-// Define types for our data structure
-interface Subtask {
-    id: string;
-    title: string;
-    isCompleted: boolean;
-    taskId: string;
-}
-
-interface Task {
-    id: string;
-    title: string;
-    description?: string | null;
-    subtasks: Subtask[];
-}
-
-interface Column {
-    id: string;
-    name: string;
-    tasks: Task[];
-}
+import { Task, Column } from "@/types/board";
 
 // Loading skeleton for columns
 function ColumnSkeleton() {
