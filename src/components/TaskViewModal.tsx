@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-
 import {
     CustomDialog,
     CustomDialogContent,
@@ -80,7 +79,7 @@ export function TaskViewModal({
             }}
         >
             <CustomDialogContent
-                className="sm:max-w-md w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] sm:w-full sm:max-w-md"
+                className="w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] sm:w-full sm:max-w-md"
                 onClick={(e) => e.stopPropagation()} // Stop click propagation
             >
                 <CustomDialogHeader className="flex flex-row items-start justify-between">

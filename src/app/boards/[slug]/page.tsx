@@ -43,9 +43,9 @@ export default async function Page({
 
     // Color mapping for column headers
     const COLORS_BY_COLUMN = {
-        done: "before:bg-green-500",
-        doing: "before:bg-orange-500",
-        todo: "before:bg-yellow-500",
+        done: "before:bg-[var(--color-done)]",
+        doing: "before:bg-[var(--color-doing)]",
+        todo: "before:bg-[var(--color-todo)]",
     } as const;
 
     const getBulletColor = (columnName: string) =>

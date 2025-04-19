@@ -91,6 +91,10 @@
     --sidebar-accent-foreground: var(--white) /*oklch(0.21 0.034 264.665)*/;
     --sidebar-border: oklch(0.928 0.006 264.531);
     --sidebar-ring: oklch(0.707 0.022 261.325);
+
+    --color-done: #49C4E5;
+    --color-doing: #8471F2;
+    --color-todo: #67E2AE;
 }
 
 .dark {
