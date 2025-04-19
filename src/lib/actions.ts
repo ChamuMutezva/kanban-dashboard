@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import type { Task } from "@/components/TaskViewModal"
+import type { Task } from "@/types/board"
 import prisma from "@/lib/prisma"
 
 /**
