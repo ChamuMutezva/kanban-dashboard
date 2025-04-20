@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma"
+import prisma from "@/lib/prisma";
 import { type NextRequest, NextResponse } from "next/server";
 
 type Params = Promise<{
@@ -35,7 +35,6 @@ export async function POST(req: NextRequest, segmentData: { params: Params }) {
 
     try {
         const { columns } = await req.json();
-
         console.log("Adding columns to board:", boardId, columns);
 
         /* Validate input
@@ -61,6 +60,38 @@ export async function POST(req: NextRequest, segmentData: { params: Params }) {
             return NextResponse.json(
                 { error: "Board not found" },
                 { status: 404 }
+            );
+        }
+
+        // Get existing column names for this board
+        const existingColumns = await prisma.column.findMany({
+            where: { boardId },
+            select: { name: true },
+        });
+
+        const existingColumnNames = new Set(
+            existingColumns.map((col) => col.name.toLowerCase())
+        );
+
+        // Check if any of the new columns already exist
+        const duplicateColumns = columns.filter((column: { name: string }) =>
+            existingColumnNames.has(column.name.toLowerCase())
+        );
+
+        if (duplicateColumns.length > 0) {
+            return NextResponse.json(
+                {
+                    error: "Column creation aborted",
+                    message: "Some columns already exist",
+                    duplicateColumns: duplicateColumns,
+                    details: {
+                        existingColumns: Array.from(existingColumnNames),
+                        attemptedDuplicates: duplicateColumns.map(
+                            (c) => c.name
+                        ),
+                    },
+                },
+                { status: 409 } // Conflict status code
             );
         }
 
