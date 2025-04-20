@@ -69,12 +69,12 @@ export function AddColumnDialog({
     });
 
     useEffect(() => {
-      const subscription = form.watch((value, { name }) => {
-        if (name?.startsWith("columns") && error) {
-          setError(null);
-        }
-      });
-      return () => subscription.unsubscribe();
+        const subscription = form.watch((value, { name }) => {
+            if (name?.startsWith("columns") && error) {
+                setError(null);
+            }
+        });
+        return () => subscription.unsubscribe();
     }, [form, error]);
 
     // Add a new column field
@@ -95,7 +95,7 @@ export function AddColumnDialog({
     // Handle form submission
     const onSubmit = async (data: FormValues) => {
         setIsSubmitting(true);
-        setError(null); // Reset error state
+        setError(null); 
         try {
             // Send the data to your API
             const response = await fetch(`/api/boards/${boardId}/columns`, {
