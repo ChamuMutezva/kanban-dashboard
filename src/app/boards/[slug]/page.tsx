@@ -63,13 +63,13 @@ export default async function Page({
     }
 
     return (
-        <main className="p-8">
+        <main className="p-4">
             {board.columns.length < 1 ? (
                 <NoColumnsFound boardId={board.id} boardSlug={board.slug} />
             ) : (
                 <div className="overflow-x-auto pb-4 -mx-8 px-8">
                     <Suspense fallback={<ColumnSkeleton />}>
-                        <div className="flex gap-6 min-w-max">
+                        <div className="flex gap-4 min-w-max">
                             {board.columns?.map((column) => (
                                 <div
                                     key={column.id}

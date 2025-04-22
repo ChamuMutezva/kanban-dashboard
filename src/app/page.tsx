@@ -16,7 +16,7 @@ export default async function Home() {
     const boards = (await getBoards()) as unknown as Board[];
 
     return (
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto p-4">
             <div className="mb-8">
                 <h2 className="text-3xl font-bold mb-2">My Kanban Boards</h2>
                 <p className="text-muted-foreground">
