@@ -92,7 +92,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
                                 })}
                                 <Button
                                     variant={"ghost"}
-                                    className="justify-start px-2"
+                                    className="justify-start px-2 rounded-tr-[50px] rounded-br-[50px]"
                                     size={isMobile ? "sm" : "lg"}
                                     onClick={() => setCreateDialogOpen(true)}
                                 >
