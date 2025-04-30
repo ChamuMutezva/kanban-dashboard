@@ -93,18 +93,12 @@ export function DeleteBoardDialog({
                     </Alert>
                 )}
 
-                <CustomDialogFooter className="gap-2 sm:gap-0">
-                    <Button
-                        variant="outline"
-                        onClick={() => onOpenChange(false)}
-                        disabled={isDeleting}
-                    >
-                        Cancel
-                    </Button>
+                <CustomDialogFooter className="gap-2 sm:gap-0 flex">
                     <Button
                         variant="destructive"
                         onClick={handleDelete}
                         disabled={isDeleting}
+                        className="flex-1"
                     >
                         {isDeleting ? (
                             <>
@@ -114,6 +108,14 @@ export function DeleteBoardDialog({
                         ) : (
                             "Delete"
                         )}
+                    </Button>
+                    <Button
+                        variant="outline"
+                        onClick={() => onOpenChange(false)}
+                        disabled={isDeleting}
+                        className="flex-1"
+                    >
+                        Cancel
                     </Button>
                 </CustomDialogFooter>
             </CustomDialogContent>
