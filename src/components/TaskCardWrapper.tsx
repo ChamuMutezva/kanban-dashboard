@@ -26,9 +26,9 @@ export function TaskCardWrapper({
     const [isDeleting, setIsDeleting] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleEdit = (taskId: string) => {
+    const handleEdit = () => {
         // Close the view modal and open the edit modal
-        console.log(taskId);
+        
         setIsViewModalOpen(false);
         setIsEditModalOpen(true);
     };
@@ -37,8 +37,6 @@ export function TaskCardWrapper({
         try {
             setIsDeleting(true);
             setError(null);
-
-            console.log("Deleting task:", taskId);
 
             // Call the server action to delete the task
             await deleteTask(taskId);
@@ -65,8 +63,6 @@ export function TaskCardWrapper({
         try {
             setIsSubmitting(true);
             setError(null);
-
-            console.log("Saving task:", updatedTask);
 
             // Call the server action to update the task
             await updateTask(updatedTask);

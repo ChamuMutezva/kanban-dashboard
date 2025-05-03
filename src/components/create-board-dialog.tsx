@@ -90,8 +90,6 @@ export function CreateBoardDialog({
                 .replace(/[^a-z0-9]+/g, "-")
                 .replace(/(^-|-$)/g, "");
 
-            console.log(`Creating board: ${data.name} with slug: ${slug}`);
-
             // Send the data to your API
             const response = await fetch("/api/boards", {
                 method: "POST",
@@ -109,8 +107,7 @@ export function CreateBoardDialog({
                 throw new Error("Failed to create board");
             }
 
-            const result = await response.json();
-            console.log("Board created successfully:", result);
+            await response.json();
 
             // Close the dialog
             onOpenChange(false);

@@ -83,8 +83,7 @@ export function EditBoardDialog({
 
     // Update form values when the board changes or dialog opens
     useEffect(() => {
-        if (board && open) {
-            console.log("Setting form values with board data:", board);
+        if (board && open) {         
             // Reset the form with the current board data
             form.reset({
                 name: board.name,
@@ -132,8 +131,7 @@ export function EditBoardDialog({
         setIsSubmitting(true);
         setError(null);
 
-        try {
-            console.log("Submitting form data:", data);
+        try {          
 
             // Send the data to your API
             const response = await fetch(`/api/boards/${board.id}`, {
@@ -156,11 +154,10 @@ export function EditBoardDialog({
                         .join(", ");
                     throw new Error(`Columns already exist: ${duplicateNames}`);
                 }
-                throw new Error(errorData.error || "Failed to update board");
+                throw new Error(errorData.error ?? "Failed to update board");
             }
 
-            const updatedBoard = await response.json();
-            console.log("Board updated successfully:", updatedBoard);
+            const updatedBoard = await response.json();         
 
             // Close the dialog
             onOpenChange(false);

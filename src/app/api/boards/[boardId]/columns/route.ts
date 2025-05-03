@@ -35,8 +35,6 @@ export async function POST(req: NextRequest, segmentData: { params: Params }) {
 
     try {
         const { columns } = await req.json();
-        console.log("Adding columns to board:", boardId, columns);
-
         /* Validate input
             What it checks:
             /!columns - Checks if columns is falsy (undefined, null, etc.)

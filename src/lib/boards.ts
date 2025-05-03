@@ -10,9 +10,7 @@ export async function getBoards() {
   })
 }
 
-export async function getBoardBySlug(slug: string) {
-  console.log("Looking for board with slug:", slug)
-
+export async function getBoardBySlug(slug: string) {  
   // First, try to find by slug
   let board = await prisma.board.findFirst({
     where: { slug },

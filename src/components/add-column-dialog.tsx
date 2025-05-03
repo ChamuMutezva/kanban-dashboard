@@ -50,16 +50,12 @@ interface AddColumnDialogProps {
 
 export function AddColumnDialog({
     boardId,
-    boardSlug,
     open,
     onOpenChange,
 }: Readonly<AddColumnDialogProps>) {
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
-    console.log("AddColumnDialog: boardSlug", boardSlug);
-
     // Initialize the form with default values
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
@@ -95,7 +91,7 @@ export function AddColumnDialog({
     // Handle form submission
     const onSubmit = async (data: FormValues) => {
         setIsSubmitting(true);
-        setError(null); 
+        setError(null);
         try {
             // Send the data to your API
             const response = await fetch(`/api/boards/${boardId}/columns`, {
