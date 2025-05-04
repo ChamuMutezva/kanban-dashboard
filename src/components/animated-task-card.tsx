@@ -15,10 +15,7 @@ interface AnimatedTaskCardProps {
     index: number;
 }
 
-export function AnimatedTaskCard({
-    task,
-    index,
-}: Readonly<AnimatedTaskCardProps>) {
+export function AnimatedTaskCard({ task }: Readonly<AnimatedTaskCardProps>) {
     const cardRef = useRef<HTMLDivElement>(null!);
 
     // Apply hover animation

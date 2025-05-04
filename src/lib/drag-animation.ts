@@ -4,7 +4,7 @@ import gsap from "gsap"
 
 export const createDragAnimation = (element: HTMLElement) => {
   // Save the original transform
-  const originalTransform = gsap.getProperty(element, "transform")
+ // const originalTransform = gsap.getProperty(element, "transform")
 
   // Scale up slightly and add shadow when dragging starts
   const onDragStart = () => {
