@@ -46,7 +46,7 @@
 
 :root {
     --dark-purple: oklch(0.55 0.1553 281.45); /*hsl(242 48% 58%)  #635fc7*/
-    --light-purple: oklch(0.76 0.1304 285.11) /* hsl(243 100% 82%) #A8A4FF*/
+    --light-purple: oklch(0.76 0.1304 285.11); /* hsl(243 100% 82%) #A8A4FF*/
     --black: oklch(0.1 0.055 263.98); /* hsl(237 100% 4%) #000112 */
     --almost-black: oklch(0.25 0.0212 280.69); /* hsl(235 16% 15%) #20212c */
     --very-dark-grey: oklch(0.3 0.0193 281.05); /* hsl(235 12% 19%) #2b2c37 */
@@ -54,10 +54,10 @@
     --mid-grey: oklch(0.64 0.0333 258.37); /* hsl(216 15% 57%) #828fa3 */
     --light-grey: oklch(0.94 0.0208 265.89); /* hsl(221 69% 94%) #E4EBFA */
     --very-light-grey: oklch(0.97 0.0101 264.52); /* hsl(220 69% 99%) #F4F7FD */
-    --white: oklch(1 0 0); /* hsl(0 0% 100%) #FFFFFF */    
-    --bright-orange: oklch(0.65 0.1826 23.65); /* hsl(0 78% 63%) #EA5555 */    
+    --white: oklch(1 0 0); /* hsl(0 0% 100%) #FFFFFF */
+    --bright-orange: oklch(0.65 0.1826 23.65); /* hsl(0 78% 63%) #EA5555 */
     --pastel-orange: oklch(0.79 0.1226 20.19); /* hsl(0 100% 80%) #FF9898 */
-    
+
     --radius: 0.625rem;
     --background: var(--very-light-grey) /*oklch(1 0 0)*/;
     --foreground: oklch(0.13 0.028 261.692);
@@ -69,7 +69,7 @@
     --primary-foreground: oklch(0.985 0.002 247.839);
     --secondary: oklch(0.967 0.003 264.542);
     --secondary-foreground: oklch(0.21 0.034 264.665);
-    --muted: var(--light-grey)/*oklch(0.967 0.003 264.542)*/;
+    --muted: var(--light-grey) /*oklch(0.967 0.003 264.542)*/;
     --muted-foreground: oklch(0.551 0.027 264.364);
     --accent: oklch(0.967 0.003 264.542);
     --accent-foreground: oklch(0.21 0.034 264.665);
@@ -82,7 +82,7 @@
     --chart-3: oklch(0.398 0.07 227.392);
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
-    --sidebar:  var(--white) /* oklch(0.985 0.002 247.839)*/;
+    --sidebar: var(--white) /* oklch(0.985 0.002 247.839)*/;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: oklch(0.13 0.028 261.692);
     --sidebar-primary: oklch(0.21 0.034 264.665);
@@ -92,9 +92,9 @@
     --sidebar-border: oklch(0.928 0.006 264.531);
     --sidebar-ring: oklch(0.707 0.022 261.325);
 
-    --color-done: #49C4E5;
-    --color-doing: #8471F2;
-    --color-todo: #67E2AE;
+    --color-done: #49c4e5;
+    --color-doing: #8471f2;
+    --color-todo: #67e2ae;
 }
 
 .dark {
@@ -133,15 +133,24 @@
 }
 
 @keyframes progress {
-    0% { width: 0%; left: 0; }
-    50% { width: 100%; left: 0; }
-    100% { width: 0%; left: 100%; }
-  }
-  
-  .animate-progress {
+    0% {
+        width: 0%;
+        left: 0;
+    }
+    50% {
+        width: 100%;
+        left: 0;
+    }
+    100% {
+        width: 0%;
+        left: 100%;
+    }
+}
+
+.animate-progress {
     animation: progress 1.5s ease-in-out infinite;
     position: relative;
-  }
+}
 
 @layer base {
     * {
@@ -151,4 +160,86 @@
         @apply bg-background text-foreground;
         font-family: var(--font-geist-jakarta-sans), system-ui, sans-serif;
     }
+}
+
+/* GSAP Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-slide-in-left {
+    animation: slideInFromLeft 0.5s ease-out forwards;
+}
+
+.animate-slide-in-right {
+    animation: slideInFromRight 0.5s ease-out forwards;
+}
+
+/* Add stagger delays */
+.stagger-delay-1 {
+    animation-delay: 0.1s;
+}
+
+.stagger-delay-2 {
+    animation-delay: 0.2s;
+}
+
+.stagger-delay-3 {
+    animation-delay: 0.3s;
+}
+
+.stagger-delay-4 {
+    animation-delay: 0.4s;
+}
+
+.stagger-delay-5 {
+    animation-delay: 0.5s;
 }
