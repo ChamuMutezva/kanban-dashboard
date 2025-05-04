@@ -79,6 +79,34 @@ Users should be able to:
 
 ### What I learned
 
+#### Prisma client generation issues and steps to fix
+
+C:\Users\chamu\Documents\GitHub\kanban-dashboard\node_modules\.prisma\client\runtime\library.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+ ⨯ [Error: Connection terminated unexpectedly] {
+  clientVersion: '6.7.0',
+  digest: '1247916745'
+ }
+
+#### Steps to fix the above
+
+1. Remove-Item -Path ".next" -Recurse -Force
+→ Deletes Next.js build cache to eliminate any corrupted build files.
+
+2. Remove-Item -Path "node_modules/.prisma" -Recurse -Force
+→ Clears Prisma's generated client files to force a fresh regeneration.
+
+3. Remove-Item -Path "node_modules/@prisma" -Recurse -Force
+→ Removes Prisma's npm package artifacts to prevent version conflicts.
+
+4. pnpm store prune
+→ Cleans PNPM's global cache of unused packages to ensure clean reinstalls.
+
+5. pnpm install
+→ Reinstalls all dependencies from scratch using PNPM's strict linking.
+
+6. npx prisma generate
+→ Regenerates the Prisma client with fresh database schema definitions.
+
 ### Continued development
 
 ### Useful resources
@@ -92,3 +120,10 @@ Users should be able to:
 - Twitter - [@ChamuMutezva](https://www.twitter.com/chamumutezva)
 
 ## Acknowledgments
+
+1. Remove-Item -Path ".next" -Recurse -Force
+2. Remove-Item -Path "node_modules/.prisma" -Recurse -Force
+3. Remove-Item -Path "node_modules/@prisma" -Recurse -Force
+4. pnpm store prune
+5. pnpm install  
+6. npx prisma generate
