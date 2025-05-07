@@ -16,6 +16,7 @@ export function AnimatedKanbanColumn({ children, column, index, bulletColor }: R
   const titleRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
+    
     if (!columnRef.current || !titleRef.current) return
 
     const ctx = gsap.context(() => {
