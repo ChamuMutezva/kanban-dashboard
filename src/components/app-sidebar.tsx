@@ -41,7 +41,7 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
     }
 
     return (
-        <>
+        <header>
             <Sidebar>
                 <SidebarContent className="justify-between pb-8">
                     <SidebarGroup>
@@ -118,6 +118,6 @@ export function AppSidebar({ boards }: Readonly<{ boards: Board[] }>) {
                 open={createDialogOpen}
                 onOpenChange={setCreateDialogOpen}
             />
-        </>
+        </header>
     );
 }

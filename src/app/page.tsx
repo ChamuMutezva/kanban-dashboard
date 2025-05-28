@@ -9,7 +9,7 @@ export default async function Home() {
     const boards = (await getBoards()) as unknown as Board[];
 
     return (
-        <main className="container mx-auto p-4">
+        <div className="container mx-auto p-4">
             <AnimatedElement
                 animation={{
                     opacity: 0,
@@ -48,7 +48,7 @@ export default async function Home() {
                     ))}
                 </div>
             )}
-        </main>
+        </div>
     );
 }
 
